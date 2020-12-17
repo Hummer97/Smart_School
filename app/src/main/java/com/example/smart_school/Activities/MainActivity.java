@@ -1,8 +1,10 @@
-package com.example.smart_school;
+package com.example.smart_school.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.smart_school.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Smart_School</string>
+    <string name="title_activity_splash_screen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="login_user_hint">User ID</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Sign In</string>
 </resources>
