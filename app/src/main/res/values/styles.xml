@@ -20,6 +20,6 @@
     </style>
     <style name="Widget.Smart_School.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
-        <item name="backgroundTint">?android:attr/colorPrimary</item>
+        <item name="backgroundTint">?android:attr/colorAccent</item>
     </style>
 </resources>

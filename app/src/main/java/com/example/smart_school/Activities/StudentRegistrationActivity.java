@@ -9,18 +9,17 @@ import android.view.View;
 import com.example.smart_school.R;
 import com.google.android.material.button.MaterialButton;
 
-public class LogInActivity extends AppCompatActivity {
-    MaterialButton logIn_btn;
-
+public class StudentRegistrationActivity extends AppCompatActivity {
+    MaterialButton student_registration_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
-        logIn_btn = findViewById(R.id.logIn_btn);
-        logIn_btn.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_student_registration);
+        student_registration_btn = findViewById(R.id.std_submit_btn);
+        student_registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LogInActivity.this,StudentRegistrationActivity.class);
+                Intent intent = new Intent(StudentRegistrationActivity.this,TeacherRegistrationActivity.class);
                 startActivity(intent);
             }
         });
