@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.bhartiyamonline.smart_school.Fragments.AddStudentFragment;
 import com.bhartiyamonline.smart_school.Fragments.AddTeacherFragment;
 import com.bhartiyamonline.smart_school.Fragments.ClassViewFragment;
+import com.bhartiyamonline.smart_school.Fragments.SectionVewFragment;
 import com.bhartiyamonline.smart_school.Fragments.ViewStudentFragment;
+import com.bhartiyamonline.smart_school.Fragments.ViewTeacherFragment;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
@@ -82,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new AddTeacherFragment()).commit();
                 break;
             case R.id.nav_view_teacher:
-                showMessage("View Teacher");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ViewTeacherFragment()).commit();
+
                 break;
 
             case R.id.nav_class_add_view:
@@ -91,10 +95,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_section_add_view:
-                showMessage("This is Added Section View");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new SectionVewFragment()).commit();
                 break;
             case R.id.nav_attendance_report:
-                showMessage("This is Attendance Report");
+                showMessage("View Attendance Report");
                 break;
 
         }

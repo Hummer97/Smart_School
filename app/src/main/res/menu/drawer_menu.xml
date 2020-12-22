@@ -44,5 +44,8 @@
     <item
         android:id="@+id/nav_attendance_report"
         android:title="Attendance Report"/>
+    <item
+        android:id="@+id/nav_logOut"
+        android:title="Sign Out"/>
 
 </menu>

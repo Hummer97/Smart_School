@@ -119,6 +119,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/std_parent_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_DOB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -155,26 +156,30 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/std_class"
-                    style="@style/Widget.Smart_School.TextInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="wrap_content"
+                    app:endIconMode="dropdown_menu"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="12dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
+                        android:id="@+id/add_student_class_dropdown"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="8"
-                        android:hint="Class" />
+                        android:hint="Select Class" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Smart_School.TextInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="wrap_content"
+                    app:endIconMode="dropdown_menu"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_toEndOf="@+id/std_class">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
+                        android:id="@+id/add_student_section_dropdown"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"

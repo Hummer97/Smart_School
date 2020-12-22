@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:elevation="6dp"
+    android:backgroundTint="@color/listThemeColor"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/sectionView_class_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Class :"
+                android:textSize="28dp"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sectionView_class_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:text="10th"
+                android:textSize="18dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/sectionView_section_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Section :"
+                android:textSize="28dp"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sectionView_section_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:text="A"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

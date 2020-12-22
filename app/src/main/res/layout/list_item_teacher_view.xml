@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:elevation="6dp"
+    android:backgroundTint="@color/listThemeColor"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/view_teacher_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+        <TextView
+            android:id="@+id/view_teacher_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_teacher_image"
+            android:text="Avinash Roy"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/view_teacher_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/view_teacher_emailID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/view_teacher_name"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_teacher_image"
+            android:text="avinashroy.it@gmail.com"
+            android:textSize="20dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/view_teacher_image"
+            app:layout_constraintTop_toBottomOf="@+id/view_teacher_name" />
+
+        <TextView
+            android:id="@+id/view_teacher_mobileNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_teacher_image"
+            android:gravity="bottom"
+            android:text="9675703668"
+            android:textSize="18dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/view_teacher_image"
+            app:layout_constraintTop_toBottomOf="@+id/view_teacher_emailID" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

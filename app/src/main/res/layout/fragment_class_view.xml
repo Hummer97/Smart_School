@@ -37,11 +37,13 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.Smart_School.TextInputLayout">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/class_add_editTxt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Add Class"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/class_add_btn"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="Submit"/>

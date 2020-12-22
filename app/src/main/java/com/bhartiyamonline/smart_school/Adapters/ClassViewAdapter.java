@@ -1,5 +1,6 @@
 package com.bhartiyamonline.smart_school.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhartiyamonline.smart_school.Models.ClassData;
 import com.bhartiyamonline.smart_school.R;
 
+import java.util.List;
+
 public class ClassViewAdapter extends RecyclerView.Adapter<ClassViewAdapter.ClassViewHolder> {
-    private String[] data;
-    public ClassViewAdapter(String[] data){
-        this.data = data;
+    private Context context;
+    private List<ClassData> classList;
+    public ClassViewAdapter(Context context, List<ClassData> classList){
+        this.context = context;
+        this.classList = classList;
 
     }
 
@@ -27,13 +33,14 @@ public class ClassViewAdapter extends RecyclerView.Adapter<ClassViewAdapter.Clas
 
     @Override
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
-        String class_Name = data[position];
+        ClassData classData = classList.get(position);
+        String class_Name = classData.getClass_name();
         holder.className.setText(class_Name);
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return classList.size();
     }
 
     public class ClassViewHolder extends RecyclerView.ViewHolder{
