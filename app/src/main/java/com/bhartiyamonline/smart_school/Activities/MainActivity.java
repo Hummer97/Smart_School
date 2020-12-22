@@ -1,4 +1,4 @@
-package com.example.smart_school.Activities;
+package com.bhartiyamonline.smart_school.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,13 +7,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.smart_school.Fragments.AddStudentFragment;
-import com.example.smart_school.Fragments.AddTeacherFragment;
-import com.example.smart_school.R;
+import com.bhartiyamonline.smart_school.Fragments.AddStudentFragment;
+import com.bhartiyamonline.smart_school.Fragments.AddTeacherFragment;
+import com.bhartiyamonline.smart_school.Fragments.ClassViewFragment;
+import com.bhartiyamonline.smart_school.Fragments.ViewStudentFragment;
+import com.bhartiyamonline.smart_school.R;
+import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,8 +28,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
+
+        if(!SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
+            Intent intent = new Intent(getApplicationContext(),LogInActivity.class);
+            startActivity(intent);
+        }
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -35,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new AddStudentFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_add_student);
         }
+
+
+
+
     }
 
     @Override
@@ -59,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new AddStudentFragment()).commit();
                 break;
             case R.id.nav_view_student:
-                showMessage("View Student");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ViewStudentFragment()).commit();
                 break;
             case R.id.nav_add_teacher:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -70,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_class_add_view:
-                showMessage("This is Added Class View");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ClassViewFragment()).commit();
                 break;
 
             case R.id.nav_section_add_view:

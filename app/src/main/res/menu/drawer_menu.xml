@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:title="Student Manager">
+            <menu>
+                <item
+                    android:id="@+id/nav_add_student"
+                    android:title="Add Student"/>
+                <item
+                    android:id="@+id/nav_view_student"
+                    android:title="View Student"/>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:title="Teacher Manager">
+            <menu>
+                <item
+                    android:id="@+id/nav_add_teacher"
+                    android:title="Add Teacher"/>
+                <item
+                    android:id="@+id/nav_view_teacher"
+                    android:title="View Teacher"/>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:title="Academic Manager">
+            <menu>
+                <item
+                    android:id="@+id/nav_class_add_view"
+                    android:title="Class add view"/>
+                <item
+                    android:id="@+id/nav_section_add_view"
+                    android:title="Added Section View"/>
+            </menu>
+        </item>
+    </group>
+    <item
+        android:id="@+id/nav_attendance_report"
+        android:title="Attendance Report"/>
+
+</menu>

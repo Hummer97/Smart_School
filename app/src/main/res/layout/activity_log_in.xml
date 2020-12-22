@@ -27,7 +27,7 @@
     </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/login_email_inputLayout"
         style="@style/Widget.Smart_School.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,16 +36,18 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:errorEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_email_edit_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_user_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/login_password_inputLayout"
         style="@style/Widget.Smart_School.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,39 +55,16 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/login_email_inputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_password_edit_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_password_hint" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/logIn_checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/logIn_checkBox"
-            android:text="Keep me Sign In" />
-    </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logIn_btn"
@@ -98,6 +77,6 @@
         android:text="@string/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/login_password_inputLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

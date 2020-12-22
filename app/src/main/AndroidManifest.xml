@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.smart_school">
+    package="com.bhartiyamonline.smart_school">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -8,12 +10,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Smart_School">
-        <activity android:name=".Activities.TeacherRegistrationActivity"></activity>
-        <activity android:name=".Activities.StudentRegistrationActivity" />
-        <activity android:name=".Activities.LogInActivity" />
-        <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.SplashScreenActivity">
+        <activity android:name="com.bhartiyamonline.smart_school.Activities.LogInActivity"
+            android:theme="@style/Theme.Smart_School.NoActionBar"/>
+        <activity android:name="com.bhartiyamonline.smart_school.Activities.MainActivity"
+            android:theme="@style/Theme.Smart_School.NoActionBar"/>
+        <activity android:name="com.bhartiyamonline.smart_school.Activities.SplashScreenActivity"
+            android:theme="@style/Theme.Smart_School.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

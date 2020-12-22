@@ -1,4 +1,4 @@
-package com.example.smart_school.Activities;
+package com.bhartiyamonline.smart_school.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.smart_school.R;
+import com.bhartiyamonline.smart_school.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(SplashScreenActivity.this,LogInActivity.class);
+                Intent mainIntent = new Intent(SplashScreenActivity.this,MainActivity.class);
                 startActivity(mainIntent);
                 finish();
             }

@@ -1,4 +1,4 @@
-package com.example.smart_school;
+package com.bhartiyamonline.smart_school;
 
 import org.junit.Test;
 
