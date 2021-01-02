@@ -1,5 +1,6 @@
 package com.bhartiyamonline.smart_school.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhartiyamonline.smart_school.Models.TeacherData;
 import com.bhartiyamonline.smart_school.R;
+
+import java.util.List;
 
 public class TeacherViewAdapter extends RecyclerView.Adapter<TeacherViewAdapter.TeacherViewHolder> {
 
-    private String[] data;
-    public TeacherViewAdapter(String[] data)
+    private Context context;
+    private List<TeacherData> teacherDataList;
+    public TeacherViewAdapter(Context context, List<TeacherData> teacherDataList)
     {
-        this.data = data;
+        this.context = context;
+        this.teacherDataList = teacherDataList;
     }
     @NonNull
     @Override
@@ -27,20 +33,27 @@ public class TeacherViewAdapter extends RecyclerView.Adapter<TeacherViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TeacherViewHolder holder, int position) {
-        String name = data[position];
+        TeacherData teacherData = teacherDataList.get(position);
+        String name = teacherData.getName();
+        String email =teacherData.getEmail();
+        String mobile = teacherData.getPhone();
         holder.teacherName.setText(name);
+        holder.teacherEmailID.setText(email);
+        holder.teacherMobileNo.setText(mobile);
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return teacherDataList.size();
     }
 
     public class TeacherViewHolder extends RecyclerView.ViewHolder{
-        TextView teacherName;
+        TextView teacherName,teacherEmailID,teacherMobileNo;
         public TeacherViewHolder(@NonNull View itemView) {
             super(itemView);
             teacherName = itemView.findViewById(R.id.view_teacher_name);
+            teacherEmailID = itemView.findViewById(R.id.view_teacher_emailID);
+            teacherMobileNo = itemView.findViewById(R.id.view_teacher_mobileNo);
         }
     }
 }
