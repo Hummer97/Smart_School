@@ -18,11 +18,18 @@
     <style name="TextAppearance.Smart_School.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
-    <style name="Widget.Smart_School.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="backgroundTint">?android:attr/colorAccent</item>
-    </style>
+<!--    <style name="Widget.Smart_School.Button" parent="Widget.MaterialComponents.Button">-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--        <item name="backgroundTint">?android:attr/colorAccent</item>-->
+<!--    </style>-->
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
+    </style>
+    <style name="Widget.Smart_School.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="Widget.Smart_School.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
     </style>
 </resources>

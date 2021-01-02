@@ -16,22 +16,24 @@ import com.bhartiyamonline.smart_school.Fragments.AddStudentFragment;
 import com.bhartiyamonline.smart_school.Fragments.AddTeacherFragment;
 import com.bhartiyamonline.smart_school.Fragments.ClassViewFragment;
 import com.bhartiyamonline.smart_school.Fragments.SectionVewFragment;
-import com.bhartiyamonline.smart_school.Fragments.ViewStudentFragment;
-import com.bhartiyamonline.smart_school.Fragments.ViewTeacherFragment;
+import com.bhartiyamonline.smart_school.Fragments.ViewStudentListFragment;
+import com.bhartiyamonline.smart_school.Fragments.ViewTeacherListFragment;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    SharedPrefManager sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
 
-        if(!SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
+        if(!sharedPrefManager.isLoggedIn()){
             Intent intent = new Intent(getApplicationContext(),LogInActivity.class);
             startActivity(intent);
         }
@@ -45,13 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new AddStudentFragment()).commit();
+                    new AddStudentFragment()).addToBackStack(null).commit();
             navigationView.setCheckedItem(R.id.nav_add_student);
         }
-
-
-
-
     }
 
     @Override
@@ -61,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         }else {
             super.onBackPressed();
+            finishAffinity();
         }
     }
     private void showMessage(String s) {
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_view_student:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ViewStudentFragment()).commit();
+                        new ViewStudentListFragment()).commit();
                 break;
             case R.id.nav_add_teacher:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -85,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_view_teacher:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ViewTeacherFragment()).commit();
-
+                        new ViewTeacherListFragment()).commit();
                 break;
 
             case R.id.nav_class_add_view:
@@ -98,12 +96,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SectionVewFragment()).commit();
                 break;
-            case R.id.nav_attendance_report:
-                showMessage("View Attendance Report");
+            case R.id.nav_logOut:
+                //showMessage("Signing out");
+                sharedPrefManager.logout();
                 break;
 
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

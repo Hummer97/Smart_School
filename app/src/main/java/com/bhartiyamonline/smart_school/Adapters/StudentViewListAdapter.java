@@ -12,19 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.toolbox.StringRequest;
-import com.bhartiyamonline.smart_school.Models.ClassData;
+import com.bhartiyamonline.smart_school.Activities.StudentView;
 import com.bhartiyamonline.smart_school.Models.StudentData;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.api.Url;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class StudentViewAdapter extends RecyclerView.Adapter<StudentViewAdapter.StudentViewHolder>{
+public class StudentViewListAdapter extends RecyclerView.Adapter<StudentViewListAdapter.StudentViewHolder>{
 
     private Context context;
     private List<StudentData> studentList;
-    public StudentViewAdapter(Context context, List<StudentData> studentList) {
+    public StudentViewListAdapter(Context context, List<StudentData> studentList) {
         this.context = context;
         this.studentList = studentList;
     }
@@ -45,7 +45,8 @@ public class StudentViewAdapter extends RecyclerView.Adapter<StudentViewAdapter.
         String section = studentData.getSection();
         String attendance = studentData.getAttendence_percent();
         String image = studentData.getImage();
-        holder.img.setImageURI(Uri.parse(Url.Image_url+image));
+        Picasso.with(context).load(Url.Image_url+image).placeholder(R.drawable.logo).into(holder.img);
+       // holder.img.setImageURI(Uri.parse(Url.Image_url+image));
         holder.studentName.setText(std_name);
         holder.studentClass.setText(class_name);
         holder.studentSection.setText(section);
@@ -55,8 +56,8 @@ public class StudentViewAdapter extends RecyclerView.Adapter<StudentViewAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,data.class);
-                intent.putExtra("class_id", studentData.getClass_id());
+                Intent intent = new Intent(context, StudentView.class);
+                intent.putExtra("student_id", studentData.getId());
                 context.startActivity(intent);
             }
         });

@@ -2,8 +2,13 @@ package com.bhartiyamonline.smart_school.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -32,12 +37,16 @@ import org.json.JSONObject;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LogInActivity extends AppCompatActivity {
     MaterialButton logIn_btn;
     TextInputEditText mUserId,mPassword;
     boolean isEmailValid, isPasswordValid;
+    ProgressDialog mProgressDialog;
+
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +55,18 @@ public class LogInActivity extends AppCompatActivity {
         logIn_btn = findViewById(R.id.logIn_btn);
         mUserId = findViewById(R.id.login_email_edit_txt);
         mPassword = findViewById(R.id.login_password_edit_txt);
+        mProgressDialog = new ProgressDialog(LogInActivity.this);
+        mProgressDialog.setMessage("Please wait..");
+
+        if(checkAndRequestPermissions()) {
+            // carry on the normal flow, as the case of  permissions  granted.
+        }
+
+
         logIn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              mProgressDialog.show();
               SetValidation();
             }
         });
@@ -83,13 +101,17 @@ public class LogInActivity extends AppCompatActivity {
             if (isEmailValid && isPasswordValid) {
                 loginApi(email,password);
             }
+            else
+            {
+                mProgressDialog.dismiss();
+            }
 
         }
 
 
 
     private void loginApi(String email,String password){
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, Url.LOGIN_API+"email="+email+"&password="+password+"&type=0", new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,Url.LOGIN_API+"email="+email+"&password="+password+"&type=2", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     try {
@@ -126,5 +148,37 @@ public class LogInActivity extends AppCompatActivity {
             });
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private  boolean checkAndRequestPermissions() {
+        int permissionSendMessage = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS);
+        int locationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.SEND_SMS);
+        } if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA);
+        }if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.MANAGE_DOCUMENTS);
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

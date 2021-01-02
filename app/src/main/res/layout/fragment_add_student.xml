@@ -18,7 +18,7 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
+                android:id="@+id/add_student_profile_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_marginTop="24dp"
@@ -31,7 +31,7 @@
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout3"
+                android:id="@+id/add_student_register_no_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,57 +40,37 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/add_student_profile_image"
                 tools:ignore="MissingConstraints">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_register_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Student Registration No" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RelativeLayout
-                android:id="@+id/std_nameBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
-
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/std_first_name"
+                    android:id="@+id/add_student_name_txt"
                     style="@style/Widget.Smart_School.TextInputLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp">
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_student_register_no_txt">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/add_student_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="8"
-                        android:hint="First Name" />
+                        android:hint="Name" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Smart_School.TextInputLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_toEndOf="@+id/std_first_name">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="Last Name" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/std_parent_name"
+                android:id="@+id/add_student_parent_name_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,9 +78,10 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_nameBox">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_name_txt">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_parent_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -108,7 +89,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/std_DOB"
+                android:id="@+id/add_student_DOB_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,7 +97,7 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_parent_name">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_parent_name_txt">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_student_DOB"
@@ -127,7 +108,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/std_Roll_no"
+                android:id="@+id/add_student_Roll_no_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,61 +116,54 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_DOB">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_DOB_txt">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_Roll_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Roll No" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RelativeLayout
-                android:id="@+id/std_classBox"
+            <LinearLayout
+                android:id="@+id/add_student_classBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
+                android:orientation="horizontal"
                 android:layout_marginRight="24dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_Roll_no">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_Roll_no_txt">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/std_class"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="wrap_content"
-                    app:endIconMode="dropdown_menu"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp">
 
-                    <AutoCompleteTextView
+                    <Spinner
                         android:id="@+id/add_student_class_dropdown"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="8"
+                        android:layout_weight="1"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/edittextbackground"
+                        android:layout_height="50dp"
                         android:hint="Select Class" />
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="wrap_content"
-                    app:endIconMode="dropdown_menu"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_toEndOf="@+id/std_class">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/add_student_section_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="Section" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </RelativeLayout>
+              <Spinner
+                  android:layout_width="match_parent"
+                  android:layout_weight="1"
+                  android:id="@+id/add_student_section_dropdown"
+                  android:layout_marginLeft="4dp"
+                  android:background="@drawable/edittextbackground"
+                  android:layout_height="50dp">
+
+              </Spinner>
+            </LinearLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/std_Mobile_no"
+                android:id="@+id/add_student_Mobile_no_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,9 +171,10 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_classBox">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_classBox">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_Mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -207,7 +182,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/std_parent_Mobile_no"
+                android:id="@+id/add_student_parent_Mobile_no_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -215,9 +190,10 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_Mobile_no">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_Mobile_no_txt">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_parent_Mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -225,7 +201,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/std_alternative_Mobile_no"
+                android:id="@+id/add_student_alternative_Mobile_no_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -233,9 +209,10 @@
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_parent_Mobile_no">
+                app:layout_constraintTop_toBottomOf="@+id/add_student_parent_Mobile_no_txt">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_alternative_Mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -243,7 +220,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/std_submit_btn"
+                android:id="@+id/add_student_submit_btn"
                 android:layout_width="match_parent"
                 style="@style/Widget.Smart_School.Button"
                 android:layout_height="56dp"
@@ -253,7 +230,7 @@
                 android:text="Submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/std_alternative_Mobile_no" />
+                app:layout_constraintTop_toBottomOf="@+id/add_student_alternative_Mobile_no_txt" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

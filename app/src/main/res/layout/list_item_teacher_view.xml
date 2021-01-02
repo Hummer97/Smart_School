@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
     android:layout_marginLeft="12dp"
+    android:layout_marginTop="6dp"
     android:layout_marginRight="12dp"
-    android:elevation="6dp"
+    android:layout_marginBottom="6dp"
     android:backgroundTint="@color/listThemeColor"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:elevation="6dp"
+    app:cardElevation="5dp"
+    app:cardMaxElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,10 +46,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/view_teacher_name"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/view_teacher_image"
             android:text="avinashroy.it@gmail.com"
-            android:textSize="20dp"
-            android:layout_marginTop="4dp"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/view_teacher_image"
             app:layout_constraintTop_toBottomOf="@+id/view_teacher_name" />
 
@@ -55,11 +60,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/view_teacher_image"
             android:gravity="bottom"
             android:text="9675703668"
             android:textSize="18dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@+id/view_teacher_image"
             app:layout_constraintTop_toBottomOf="@+id/view_teacher_emailID" />
     </androidx.constraintlayout.widget.ConstraintLayout>

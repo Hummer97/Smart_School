@@ -1,89 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
     android:layout_marginLeft="12dp"
+    android:layout_marginTop="6dp"
     android:layout_marginRight="12dp"
-    android:elevation="6dp"
+    android:layout_marginBottom="6dp"
     android:backgroundTint="@color/listThemeColor"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:elevation="6dp"
+    app:cardElevation="5dp"
+    app:cardMaxElevation="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/view_student_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/view_student_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
-            <TextView
-                android:id="@+id/view_student_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/view_student_image"
-                android:text="Avinash Roy"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/view_student_image"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/view_student_class_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/view_student_name"
-                android:layout_marginStart="16dp"
-                android:textStyle="bold"
-                android:layout_toEndOf="@+id/view_student_image"
-                android:text="Class :"
-                android:textSize="20dp"
-                app:layout_constraintStart_toEndOf="@+id/view_student_image"
-                app:layout_constraintTop_toBottomOf="@+id/view_student_name" />
+        <TextView
+            android:id="@+id/view_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:text="Avinash Roy"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/view_student_image"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/view_student_class"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/view_student_name"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/view_student_image"
-                android:text="10th"
-                android:textSize="20dp"
-                app:layout_constraintStart_toEndOf="@+id/view_student_class_txt"
-                app:layout_constraintTop_toBottomOf="@+id/view_student_name" />
-            <TextView
-                android:id="@+id/view_student_attendance_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/view_student_image"
-                android:gravity="bottom"
-                android:text="Section :"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                app:layout_constraintStart_toEndOf="@+id/view_student_image"
-                app:layout_constraintTop_toBottomOf="@+id/view_student_class" />
+        <TextView
+            android:id="@+id/view_student_class_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/view_student_name"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:text="Class :"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/view_student_image"
+            app:layout_constraintTop_toBottomOf="@+id/view_student_name" />
 
-            <TextView
-                android:id="@+id/view_student_section"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/view_student_image"
-                android:gravity="bottom"
-                android:text="A"
-                android:textSize="18dp"
-                app:layout_constraintStart_toEndOf="@+id/view_student_attendance_txt"
-                app:layout_constraintTop_toBottomOf="@+id/view_student_class" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/view_student_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/view_student_name"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:text="10th"
+            android:textSize="18dp"
+            app:layout_constraintStart_toEndOf="@+id/view_student_class_txt"
+            app:layout_constraintTop_toBottomOf="@+id/view_student_name" />
+
+        <TextView
+            android:id="@+id/view_student_section_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:gravity="bottom"
+            android:text="Section :"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/view_student_image"
+            app:layout_constraintTop_toBottomOf="@+id/view_student_class_txt" />
+
+        <TextView
+            android:id="@+id/view_student_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:gravity="bottom"
+            android:text="A"
+            android:textSize="18dp"
+            app:layout_constraintStart_toEndOf="@+id/view_student_section_txt"
+            app:layout_constraintTop_toBottomOf="@+id/view_student_class" />
+
+        <TextView
+            android:id="@+id/view_student_attendance_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:gravity="bottom"
+            android:text="Attendance :"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/view_student_image"
+            app:layout_constraintTop_toBottomOf="@+id/view_student_section_txt" />
+
+        <TextView
+            android:id="@+id/view_student_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/view_student_image"
+            android:gravity="bottom"
+            android:text="80%"
+            android:textSize="18dp"
+            app:layout_constraintStart_toEndOf="@+id/view_student_attendance_txt"
+            app:layout_constraintTop_toBottomOf="@+id/view_student_section" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

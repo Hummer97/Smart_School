@@ -19,7 +19,7 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/add_teacher_profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginTop="24dp"
@@ -32,7 +32,7 @@
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_name"
+            android:id="@+id/add_teacher_name_txt"
             style="@style/Widget.Smart_School.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,35 +41,36 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_profile_image"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_teacher_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Teacher Name" />
+                android:hint="add_teacher Name" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
-            android:id="@+id/teacher_Box"
+            android:id="@+id/add_teacher_Box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_name">
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_name_txt">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teacher_DOB"
+                android:id="@+id/add_teacher_DOB_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/teacher_DOB_View"
+                    android:id="@+id/add_teacher_DOB_View"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -77,12 +78,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_teacher_gender_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:endIconMode="dropdown_menu"
                 android:layout_marginLeft="12dp"
-                android:layout_toEndOf="@+id/teacher_DOB">
+                android:layout_toEndOf="@+id/add_teacher_DOB_txt">
 
                 <AutoCompleteTextView
                     android:id="@+id/add_teacher_gender_dropdown"
@@ -93,62 +95,53 @@
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
+        <Spinner
+            android:id="@+id/add_teacher_class_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/edittextbackground"
+            android:hint="Select Class"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_Box" />
+
+
+        <Spinner
+            android:id="@+id/add_teacher_section_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/edittextbackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_class_dropdown"/>
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_class"
+            android:id="@+id/add_teacher_mail_txt"
             style="@style/Widget.Smart_School.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_Box">
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_section_dropdown">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Class" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_section"
-            style="@style/Widget.Smart_School.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_class">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Section" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_mail"
-            style="@style/Widget.Smart_School.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_section">
-
-            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_teacher_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Email ID" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_password"
+            android:id="@+id/add_teacher_password_txt"
             style="@style/Widget.Smart_School.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,16 +149,17 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_mail">
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_mail_txt">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_teacher_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Password" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_confirm_password"
+            android:id="@+id/add_teacher_confirm_password_txt"
             style="@style/Widget.Smart_School.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,9 +167,10 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_password">
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_password_txt">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_teacher_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -184,7 +179,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_Mobile_no"
+            android:id="@+id/add_teacher_Mobile_no_txt"
             style="@style/Widget.Smart_School.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -192,9 +187,10 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_confirm_password">
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_confirm_password_txt">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_teacher_Mobile_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -202,7 +198,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_alternative_Mobile_no"
+            android:id="@+id/add_teacher_alternative_Mobile_no_txt"
             style="@style/Widget.Smart_School.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -210,9 +206,10 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_Mobile_no">
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_Mobile_no_txt">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_teacher_alternative_Mobile_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -221,7 +218,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/teacher_submit_btn"
+            android:id="@+id/add_teacher_submit_btn"
             android:layout_width="match_parent"
             style="@style/Widget.Smart_School.Button"
             android:layout_height="56dp"
@@ -231,7 +228,7 @@
             android:text="Submit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacher_alternative_Mobile_no" />
+            app:layout_constraintTop_toBottomOf="@+id/add_teacher_alternative_Mobile_no_txt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 package com.bhartiyamonline.smart_school.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhartiyamonline.smart_school.Models.SectionData;
 import com.bhartiyamonline.smart_school.R;
+
+import java.util.List;
 
 public class SectionViewAdapter extends RecyclerView.Adapter<SectionViewAdapter.SectionViewHolder> {
 
-    private String[] data;
-    public SectionViewAdapter(String[] data)
+    private Context context;
+    private List<SectionData> sectionDataList;
+    public SectionViewAdapter(Context context,List<SectionData> sectionDataList)
     {
-        this.data = data;
+        this.context = context;
+        this.sectionDataList  = sectionDataList;
     }
     @NonNull
     @Override
@@ -27,20 +33,21 @@ public class SectionViewAdapter extends RecyclerView.Adapter<SectionViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SectionViewHolder holder, int position) {
-        String sectionName = data[position];
-        holder.section.setText(sectionName);
+        SectionData sectionData = sectionDataList.get(position);
+        String sectionName = sectionData.getSection();
+        holder.sectionName.setText(sectionName);
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return sectionDataList.size();
     }
 
     public class SectionViewHolder extends RecyclerView.ViewHolder{
-        TextView section;
+        TextView sectionName;
         public SectionViewHolder(@NonNull View itemView) {
             super(itemView);
-            section = itemView.findViewById(R.id.sectionView_section_txt);
+            sectionName = itemView.findViewById(R.id.sectionView_section_txt);
         }
     }
 }

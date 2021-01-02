@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:id="@+id/add_class_toast_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Class"
+                    android:gravity="center"
+                    android:textSize="32dp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Smart_School.TextInputLayout">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/class_add_editTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Add Class"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="end">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/class_cancel_btn"
+                        android:layout_width="wrap_content"
+                        style="@style/Widget.Smart_School.Button.TextButton"
+                        android:layout_height="56dp"
+                        android:layout_gravity="end"
+                        android:layout_margin="6dp"
+                        android:text="Cancel"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/class_add_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="56dp"
+                        android:layout_gravity="end"
+                        android:layout_margin="6dp"
+                        android:text="Submit" />
+                </LinearLayout>
+
+            </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

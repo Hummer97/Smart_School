@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.StudentView"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/student_profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/student_Name_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Student Name"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_Name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_profile_image" />
+
+        <TextView
+            android:id="@+id/student_Name"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_Name_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_profile_image" />
+
+        <TextView
+            android:id="@+id/student_register_no_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Register No"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_register_no"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_Name_txt" />
+
+        <TextView
+            android:id="@+id/student_register_no"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_register_no_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_Name" />
+
+        <TextView
+            android:id="@+id/student_roll_no_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Roll No"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_roll_no"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_register_no_txt" />
+
+        <TextView
+            android:id="@+id/student_roll_no"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_roll_no_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_register_no" />
+
+        <TextView
+            android:id="@+id/student_phone_no_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Phone No"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_phone_no"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_roll_no_txt" />
+
+        <TextView
+            android:id="@+id/student_phone_no"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_phone_no_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_roll_no" />
+
+        <TextView
+            android:id="@+id/student_alt_mobile_no_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Alternative Mob No"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_alt_mobile_no"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_phone_no_txt" />
+
+        <TextView
+            android:id="@+id/student_alt_mobile_no"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_alt_mobile_no_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_phone_no" />
+
+        <TextView
+            android:id="@+id/student_p_name_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Parent Name"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_p_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_alt_mobile_no_txt" />
+
+        <TextView
+            android:id="@+id/student_p_name"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_p_name_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_alt_mobile_no" />
+
+        <TextView
+            android:id="@+id/student_dob_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="DOB"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_dob"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_p_name_txt" />
+
+        <TextView
+            android:id="@+id/student_dob"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_dob_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_p_name" />
+
+        <TextView
+            android:id="@+id/student_section_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Section"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_section"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_dob_txt" />
+
+        <TextView
+            android:id="@+id/student_section"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_section_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_dob" />
+
+        <TextView
+            android:id="@+id/student_attendence_percent_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Attendence"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_attendence_percent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_section_txt" />
+
+        <TextView
+            android:id="@+id/student_attendence_percent"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_attendence_percent_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_section" />
+
+        <TextView
+            android:id="@+id/student_class_name_txt"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:text="Class"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/student_class_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_attendence_percent_txt" />
+
+        <TextView
+            android:id="@+id/student_class_name"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/student_class_name_txt"
+            app:layout_constraintTop_toBottomOf="@+id/student_attendence_percent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

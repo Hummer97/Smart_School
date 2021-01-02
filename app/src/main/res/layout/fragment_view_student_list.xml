@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ViewStudentFragment">
+    tools:context=".Fragments.ViewStudentListFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -16,56 +16,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:orientation="vertical"
-                android:padding="4dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/student_class_view_txtInput"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                <Spinner
+                    android:id="@+id/view_student_class_dropdown"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:endIconMode="dropdown_menu"
-                    tools:layout_editor_absoluteX="8dp"
-                    tools:layout_editor_absoluteY="8dp">
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/edittextbackground"
+                    android:layout_height="45dp"
+                    android:ems="8"
+                    android:hint="Select Class" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/student_class_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Select Class" />
-                </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:orientation="vertical"
-                android:padding="4dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/student_section_view_txtInput"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                <Spinner
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:endIconMode="dropdown_menu"
-                    tools:layout_editor_absoluteX="8dp"
-                    tools:layout_editor_absoluteY="8dp">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/student_section_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Select Class" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
+                    android:layout_weight="1"
+                    android:id="@+id/view_student_section_dropdown"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/edittextbackground"
+                    android:layout_height="45dp"/>
     </LinearLayout>
 
     <!-- TODO: Update blank fragment layout -->
