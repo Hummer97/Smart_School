@@ -79,7 +79,7 @@ public class TeacherView extends AppCompatActivity {
                     {
                         JSONObject object1 = object.getJSONObject("school-details");
                             String image = object1.getString("image");
-                            Picasso.with(getApplicationContext()).load(Url.Image_url+image).placeholder(R.drawable.logo).into(mProfilePic);
+                            Picasso.with(getApplicationContext()).load(Url.Image_url+image).placeholder(R.drawable.no_image).into(mProfilePic);
                             mTeacherName.setText(object1.getString("name"));
                             mEmail.setText(object1.getString("email"));
                             mPhoneNo.setText(object1.getString("phone"));

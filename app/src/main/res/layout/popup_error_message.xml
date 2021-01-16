@@ -19,7 +19,7 @@
             android:layout_gravity="center_horizontal"/>
 
         <TextView
-            android:id="@+id/popup_txt"
+            android:id="@+id/error_popup_txt_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"

@@ -18,6 +18,7 @@ import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.api.Url;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class StudentViewListAdapter extends RecyclerView.Adapter<StudentViewListAdapter.StudentViewHolder>{
@@ -45,12 +46,14 @@ public class StudentViewListAdapter extends RecyclerView.Adapter<StudentViewList
         String section = studentData.getSection();
         String attendance = studentData.getAttendence_percent();
         String image = studentData.getImage();
-        Picasso.with(context).load(Url.Image_url+image).placeholder(R.drawable.logo).into(holder.img);
+        Picasso.with(context).load(Url.Image_url+image).placeholder(R.drawable.no_image).into(holder.img);
        // holder.img.setImageURI(Uri.parse(Url.Image_url+image));
         holder.studentName.setText(std_name);
         holder.studentClass.setText(class_name);
         holder.studentSection.setText(section);
         holder.studentAttendance.setText(attendance);
+        Double attendanceData = Double.valueOf(studentData.getAttendence_percent());
+        holder.studentAttendance.setText(new DecimalFormat("##.#").format(attendanceData)+" %");
 
         //Click event on particular card view
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -30,6 +30,8 @@
                         android:id="@+id/class_add_editTxt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="2"
                         android:hint="Add Class"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout

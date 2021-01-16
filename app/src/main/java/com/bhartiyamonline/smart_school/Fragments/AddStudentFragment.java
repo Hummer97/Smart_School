@@ -2,6 +2,7 @@ package com.bhartiyamonline.smart_school.Fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,16 +11,11 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.loader.content.CursorLoader;
-
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,11 +23,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -42,7 +43,6 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bhartiyamonline.smart_school.Activities.Multipart.MultipartRequest;
@@ -58,54 +58,51 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-
-import static android.app.Activity.RESULT_OK;
 
 public class AddStudentFragment extends Fragment {
     private Spinner class_Dropdown,section_Dropdown;
+    private TextView mDOB_txt;
     private TextInputEditText mStudentName_EditTxt,mParentName_EditTxt,mDob_EditTxt,
             mRollNo_EditTxt,mMobileNo_EditTxt,mParentMobileNo_EditTxt,mAlterMobileNo_EditTxt,
             mStudentRegistrationNo_EditTxt;
+    private TextInputLayout mSelect_DOB;
     private MaterialButton mSubmitBtn;
     private SharedPrefManager sharedPrefManager;
-    private AlertDialog.Builder mDialogBuilder;
-    private AlertDialog mDialog;
-    private  View successPopup;
+    private AlertDialog.Builder mDialogBuilder2;
+    private AlertDialog mDialog2;
+    private ImageView mImg_btn;
     private String school_id,mClass_id;
-    private static final int MY_PERMISSIONS_REQUEST_CODE = 123;
-    private ArrayList<ClassData> goodModelArrayList = new ArrayList<>();
-    private ArrayList<SectionData> sectionDataArrayList = new ArrayList<>();
-    private ArrayList<SectionData> sectionDataArrayList2 = new ArrayList<>();
+    private final ArrayList<ClassData> goodModelArrayList = new ArrayList<>();
+    private final ArrayList<SectionData> sectionDataArrayList = new ArrayList<>();
+    private final ArrayList<SectionData> sectionDataArrayList2 = new ArrayList<>();
     private ArrayList<String> arrayList = new ArrayList<>();
     private RequestQueue rq;
-    private String filePatadhar = "";
+    private final String filePatadhar = "";
     private int mUserId;
     private String mStudentName,mParentName,mDob,mRollNo,mClass,mSection,mMobileNo,mParentMobileNo,mAlterMobileNo,mStudentRegistrationNo;
     private ImageView select_profile;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     //////////////////////////////////////////kalpana////////////////////////////
     //////////////////////////imageupload////////////////////////////////////
-    ImageView fileimage;
     private String StudentIMAge = "";
     String imageviewSelected = "";
-    private static int RESULT_LOAD_IMAGE = 1;
+    private static final int RESULT_LOAD_IMAGE = 1;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     ProgressDialog pDialog;
+
     ///////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
     @Override
@@ -125,13 +122,16 @@ public class AddStudentFragment extends Fragment {
         school_id = sharedPrefManager.getUser().getSchool_id();
         arrayList = new ArrayList<>();
         rq = Volley.newRequestQueue(getContext());
-
+        mImg_btn = view.findViewById(R.id.add_student_img_btn);
         //All EditBox references
         select_profile = view.findViewById(R.id.add_student_profile_image);
         mStudentRegistrationNo_EditTxt=view.findViewById(R.id.add_student_register_no);
         mStudentName_EditTxt = view.findViewById(R.id.add_student_name);
         mParentName_EditTxt = view.findViewById(R.id.add_student_parent_name);
-        mDob_EditTxt  = view.findViewById(R.id.add_student_DOB);
+//        mDob_EditTxt  = view.findViewById(R.id.add_student_DOB);
+        mDOB_txt = view.findViewById(R.id.add_student_DOB_txt);
+//        mSelect_DOB = view.findViewById(R.id.add_student_DOB_txt);
+
         mRollNo_EditTxt = view.findViewById(R.id.add_student_Roll_no);
         class_Dropdown = (Spinner)view.findViewById(R.id.add_student_class_dropdown);
         section_Dropdown = view.findViewById(R.id.add_student_section_dropdown);
@@ -142,14 +142,58 @@ public class AddStudentFragment extends Fragment {
         mSubmitBtn = view.findViewById(R.id.add_student_submit_btn);
 
 
-        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Select DOB");
-
-        final MaterialDatePicker materialDatePicker = builder.build();
-        mDob_EditTxt.setOnClickListener(new View.OnClickListener() {
+//        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+//        builder.setTitleText("Select DOB");
+//
+//        final MaterialDatePicker materialDatePicker = builder.build();
+        mDOB_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                materialDatePicker.show(getParentFragmentManager(), "DOB");
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                //materialDatePicker.show(getParentFragmentManager(), "DOB");
+            }
+        });
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    Log.d("onDateSet: ", +year+"/"+ month +"/"+dayOfMonth);
+                    mDOB_txt.setText(year+"/"+ (month+1) +"/"+dayOfMonth);
+            }
+        };
+
+
+
+        mImg_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = "Open Photo";
+                CharSequence[] itemlist ={"Pick from Gallery"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(title);
+                builder.setItems(itemlist, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:// Take Photo
+                                imageviewSelected = "paymentpic";
+                                selectImage();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.setCancelable(true);
+                alert.show();
             }
         });
 
@@ -186,12 +230,12 @@ public class AddStudentFragment extends Fragment {
 
             }
         });
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
-                mDob_EditTxt.setText(materialDatePicker.getHeaderText());
-            }
-        });
+//        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+//            @Override
+//            public void onPositiveButtonClick(Object selection) {
+//                mDob_EditTxt.setText(materialDatePicker.getHeaderText());
+//            }
+//        });
         if (class_Dropdown != null) {
             class_Dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -327,11 +371,19 @@ public class AddStudentFragment extends Fragment {
             mParentMobileNo_EditTxt.requestFocus();
             return false;
         }
-        else if(mAlterMobileNo.length()>10 || mAlterMobileNo.length()<10)
+        else if(!mAlterMobileNo.isEmpty())
         {
-            mAlterMobileNo_EditTxt.setError("Mobile Must be 10 digit");
-            mAlterMobileNo_EditTxt.requestFocus();
-            return false;
+            if(mAlterMobileNo.length()>10 || mAlterMobileNo.length()<10)
+            {
+                mAlterMobileNo_EditTxt.setError("Mobile Must be 10 digit");
+                mAlterMobileNo_EditTxt.requestFocus();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
         else
         {
@@ -396,7 +448,7 @@ public class AddStudentFragment extends Fragment {
 
                                 sectionDataArrayList.clear();
                                 JSONArray jsonArray = object.getJSONArray("Section");
-                                sectionDataArrayList.add(new SectionData("","","","Select","","",""));
+                                sectionDataArrayList.add(new SectionData("","","","Select Section","","",""));
                                 for (int i=0; i < jsonArray.length();i++)
                                 {
                                     JSONObject object1 = jsonArray.getJSONObject(i);
@@ -474,7 +526,7 @@ public class AddStudentFragment extends Fragment {
 
                         goodModelArrayList.clear();
                         JSONArray jsonArray = object.getJSONArray("class-details");
-                        goodModelArrayList.add(new ClassData("","","Select","","",""));
+                        goodModelArrayList.add(new ClassData("","","Select Class","","",""));
                         for (int i=0; i < jsonArray.length();i++)
                         {
                             JSONObject object1 = jsonArray.getJSONObject(i);
@@ -702,41 +754,46 @@ public class AddStudentFragment extends Fragment {
                         showCustomDialog1decline("Time out plz try again !.");
                         pDialog.dismiss();
                     }
-                    return;
                 }
             }, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.e("Success", ""+response);
-                    pDialog.dismiss();
+
                     try {
                         JSONObject object = new JSONObject(response);
                         String status =object.getString("status");
                         String msg =object.getString("msg");
-                        JSONArray student = object.getJSONArray("student");
-                        for (int i=0; i<student.length();i++){
-                            JSONObject jobj = student.getJSONObject(i);
-                            String id = jobj.getString("id");
-                            String name = jobj.getString("name");
-                            String register_no = jobj.getString("register_no");
-                            String roll_no = jobj.getString("roll_no");
-                            String phone_no = jobj.getString("phone_no");
-                            String alt_mobile_no = jobj.getString("alt_mobile_no");
-                            String p_name = jobj.getString("p_name");
-                            String mClass = jobj.getString("class");
-                            String dob = jobj.getString("dob");
-                            String category = jobj.getString("category");
-                            String section = jobj.getString("section");
-                            String image = jobj.getString("image");
-                            String active = jobj.getString("active");
-                            String attendence_percent = jobj.getString("attendence_percent");
-                            String created_at = jobj.getString("created_at");
-                            String updated_at = jobj.getString("updated_at");
-//                            getSuccessPopup();
+                        if(status.equals("200")) {
+                            pDialog.dismiss();
+                            getsuccessPopup();
+                            JSONArray student = object.getJSONArray("student");
+                            for (int i = 0; i < student.length(); i++) {
+                                JSONObject jobj = student.getJSONObject(i);
+                                String id = jobj.getString("id");
+                                String name = jobj.getString("name");
+                                String register_no = jobj.getString("register_no");
+                                String roll_no = jobj.getString("roll_no");
+                                String phone_no = jobj.getString("phone_no");
+                                String alt_mobile_no = jobj.getString("alt_mobile_no");
+                                String p_name = jobj.getString("p_name");
+                                String mClass = jobj.getString("class");
+                                String dob = jobj.getString("dob");
+                                String category = jobj.getString("category");
+                                String section = jobj.getString("section");
+                                String image = jobj.getString("image");
+                                String active = jobj.getString("active");
+                                String attendence_percent = jobj.getString("attendence_percent");
+                                String created_at = jobj.getString("created_at");
+                                String updated_at = jobj.getString("updated_at");
 
-
+                            }
+                            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            pDialog.dismiss();
+                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         pDialog.dismiss();
                         Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -751,17 +808,11 @@ public class AddStudentFragment extends Fragment {
 //            RequestQueue requestQueue = Volley.newRequestQueue(this);
 //            requestQueue.add(req);
 
-
-
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | NullPointerException e) {
             pDialog.dismiss();
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
 
-        } catch (NullPointerException e) {
-            pDialog.dismiss();
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
 
     }
@@ -851,7 +902,6 @@ private void selectImage() {
             return true;
         }
     }
-
     public void showDialog(final String msg, final Context context,
                            final String permission) {
         android.app.AlertDialog.Builder alertBuilder = new android.app.AlertDialog.Builder(context);
@@ -890,5 +940,25 @@ private void selectImage() {
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+private void getsuccessPopup() {
+    mDialogBuilder2 = new AlertDialog.Builder(getContext());
+    LayoutInflater li = getLayoutInflater();
+    View popupView = li.inflate(R.layout.popup_message, null);
+    TextView popup_Text = popupView.findViewById(R.id.popup_txt);
+    MaterialButton mOksBtn = popupView.findViewById(R.id.popup_ok);
 
+    mDialogBuilder2.setView(popupView);
+    mDialog2 = mDialogBuilder2.create();
+    mDialog2.show();
+    mOksBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mDialog2.dismiss();
+            ViewStudentListFragment viewStudentListFragment = new ViewStudentListFragment();
+            FragmentManager manager = getFragmentManager();
+            manager.beginTransaction().replace(R.id.fragment_container,
+                    viewStudentListFragment).commit();
+        }
+    });
+}
 }

@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -45,6 +47,8 @@ public class LogInActivity extends AppCompatActivity {
     TextInputEditText mUserId,mPassword;
     boolean isEmailValid, isPasswordValid;
     ProgressDialog mProgressDialog;
+    private AlertDialog.Builder mDialogBuilder;
+    private AlertDialog mDialog;
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
@@ -116,23 +120,30 @@ public class LogInActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     try {
                         JSONObject object = new JSONObject(response);
-                           JSONObject object1 = object.getJSONObject("user");
-                           String id = object1.getString("id");
-                           String  name = object1.getString("name");
-                           String email = object1.getString("email");
-                           String type = object1.getString("type");
-                           String school_id = object1.getString("school_id");
+                            String status = object.getString("status");
+                            String msg = object.getString("msg");
+                            if (status.equals("200")){
+                                JSONObject object1 = object.getJSONObject("user");
+                                String id = object1.getString("id");
+                                String  name = object1.getString("name");
+                                String email = object1.getString("email");
+                                String type = object1.getString("type");
+                                String school_id = object1.getString("school_id");
 
-                           UserData userData = new UserData(name,email,type,type,school_id,Integer.parseInt(id));
+                                UserData userData = new UserData(name,email,type,type,school_id,Integer.parseInt(id));
 
-                          SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
 
-                            Log.d("Login","Response: "+object.getString("status"));
+                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        startActivity(intent);
+                            }else{
+//                                getsuccessPopup(msg);
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                mProgressDialog.dismiss();
+                            }
 
-                            Toast.makeText(getApplicationContext(), object.getString("status"), Toast.LENGTH_LONG).show();
 
                     } catch (JSONException e) {
                         Log.d("Login","Not Response: "+e.getMessage());
@@ -175,6 +186,25 @@ public class LogInActivity extends AppCompatActivity {
         }
         return true;
     }
+
+//    private void getsuccessPopup(String msg) {
+//        mDialogBuilder = new AlertDialog.Builder(LogInActivity.this);
+//        LayoutInflater li = getLayoutInflater();
+//        View popupView = li.inflate(R.layout.popup_error_message, null);
+//        MaterialButton mOksBtn = popupView.findViewById(R.id.popup_ok);
+//        TextInputEditText mShowTxt = popupView.findViewById(R.id.error_popup_txt_msg);
+//        mShowTxt.setText(msg);
+//
+//        mDialogBuilder.setView(popupView);
+//        mDialog = mDialogBuilder.create();
+//        mDialog.show();
+//        mOksBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mDialog.dismiss();
+//            }
+//        });
+//    }
 
     @Override
     public void onBackPressed() {

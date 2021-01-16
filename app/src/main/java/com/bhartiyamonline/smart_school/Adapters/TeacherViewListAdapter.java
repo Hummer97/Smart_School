@@ -47,7 +47,7 @@ public class TeacherViewListAdapter extends RecyclerView.Adapter<TeacherViewList
         holder.teacherEmailID.setText(email);
         holder.teacherMobileNo.setText(mobile);
         String image = teacherData.getImage();
-        Picasso.with(context).load(Url.Image_url+image).placeholder(R.drawable.logo).into(holder.mProfilePic);
+        Picasso.with(context).load(Url.Image_url+image).placeholder(R.drawable.no_image).into(holder.mProfilePic);
 
         //Click event on particular card view
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -26,6 +26,7 @@
             android:name=".Activities.LogInActivity"
             android:theme="@style/Theme.Smart_School.NoActionBar" />
         <activity
+
             android:name=".Activities.MainActivity"
             android:theme="@style/Theme.Smart_School.NoActionBar" />
         <activity

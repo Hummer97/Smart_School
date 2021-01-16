@@ -2,6 +2,7 @@ package com.bhartiyamonline.smart_school.Fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,8 +30,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -66,6 +71,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class AddTeacherFragment extends Fragment {
@@ -77,9 +83,14 @@ public class AddTeacherFragment extends Fragment {
     private ArrayList<String> arrayList = new ArrayList<>();
     private RequestQueue rq;
     private SharedPrefManager mSharedPrefManager;
-    private TextInputEditText mTeacherName_EditTxt,mDob_EditTxt,mMobileNo_EditTxt,mEmail_EditTxt,mAlterMobileNo_EditTxt,
+    private TextInputEditText mTeacherName_EditTxt,mMobileNo_EditTxt,mEmail_EditTxt,mAlterMobileNo_EditTxt,
             mPassword_EditTxt,mC_Password_EditTxt;
+    private TextView mDob_EditTxt;
     private MaterialButton mSubmitBtn;
+    private ImageView mAdd_Img_btn;
+    private AlertDialog.Builder mDialogBuilder,mDialogBuilder2;
+    private AlertDialog mDialog,mDialog2;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     //////////////////////////////////////////kalpana////////////////////////////
     //////////////////////////imageupload////////////////////////////////////
     ImageView fileimage;
@@ -120,7 +131,7 @@ public class AddTeacherFragment extends Fragment {
         mPassword_EditTxt = view.findViewById(R.id.add_teacher_password);
         mC_Password_EditTxt = view.findViewById(R.id.add_teacher_confirm_password);
         mSubmitBtn = view.findViewById(R.id.add_teacher_submit_btn);
-
+        mAdd_Img_btn = view.findViewById(R.id.add_teacher_img_btn);
 
 
         MaterialDatePicker.Builder builder= MaterialDatePicker.Builder.datePicker();
@@ -130,13 +141,61 @@ public class AddTeacherFragment extends Fragment {
         mDob_EditTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                materialDatePicker.show(getParentFragmentManager(), "DOB");
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Dialog_MinWidth,mDateSetListener,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+//                materialDatePicker.show(getParentFragmentManager(), "DOB");
             }
         });
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onPositiveButtonClick(Object selection) {
-                mDob_EditTxt.setText(materialDatePicker.getHeaderText());
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Log.d("onDateSet: ", +year+"/"+ month +"/"+dayOfMonth);
+                mDob_EditTxt.setText(dayOfMonth+"/"+ (month+1) +"/"+year);
+            }
+        };
+
+
+//        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+//            @Override
+//            public void onPositiveButtonClick(Object selection) {
+//
+////                mDob_EditTxt.setText(materialDatePicker.getHeaderText());
+//            }
+//        });
+
+
+
+
+        mAdd_Img_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = "Open Photo";
+                CharSequence[] itemlist ={"Pick from Gallery"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(title);
+                builder.setItems(itemlist, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:// Take Photo
+                                imageviewSelected = "paymentpic";
+                                selectImage();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.setCancelable(true);
+                alert.show();
             }
         });
         select_profile.setOnClickListener(new View.OnClickListener() {
@@ -313,12 +372,19 @@ public class AddTeacherFragment extends Fragment {
             mMobileNo_EditTxt.requestFocus();
             return false;
         }
-
-        else if(mAlterMobileNo.length()>10 || mAlterMobileNo.length()<10)
+        else if(!mAlterMobileNo.isEmpty())
         {
-            mAlterMobileNo_EditTxt.setError("Mobile Must be 10 digit");
-            mAlterMobileNo_EditTxt.requestFocus();
-            return false;
+            if(mAlterMobileNo.length()>10 || mAlterMobileNo.length()<10)
+            {
+                mAlterMobileNo_EditTxt.setError("Mobile Must be 10 digit");
+                mAlterMobileNo_EditTxt.requestFocus();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
         else
         {
@@ -329,8 +395,7 @@ public class AddTeacherFragment extends Fragment {
     private void genderDropdown() {
         String[] items = new String[]{
                 "Male",
-                "Female",
-                "other"
+                "Female"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getContext(),
@@ -355,7 +420,7 @@ public class AddTeacherFragment extends Fragment {
 
                                 sectionDataArrayList.clear();
                                 JSONArray jsonArray = object.getJSONArray("Section");
-                                sectionDataArrayList.add(new SectionData("","","","Select","","",""));
+                                sectionDataArrayList.add(new SectionData("","","","Select Section","","",""));
                                 for (int i=0; i < jsonArray.length();i++)
                                 {
                                     JSONObject object1 = jsonArray.getJSONObject(i);
@@ -416,7 +481,7 @@ public class AddTeacherFragment extends Fragment {
 
                                 goodModelArrayList.clear();
                                 JSONArray jsonArray = object.getJSONArray("class-details");
-                                goodModelArrayList.add(new ClassData("","","Select","","",""));
+                                goodModelArrayList.add(new ClassData("","","Select Class","","",""));
                                 for (int i=0; i < jsonArray.length();i++)
                                 {
                                     JSONObject object1 = jsonArray.getJSONObject(i);
@@ -512,21 +577,23 @@ public class AddTeacherFragment extends Fragment {
                         JSONObject object = new JSONObject(response);
                         String status = object.getString("status");
                         String msg =object.getString("msg");
+                        if (status.equals("200")) {
+                            pDialog.dismiss();
+                            getsuccessPopup();
                             JSONObject jobj = object.getJSONObject("student");
-
                             String id = jobj.getString("id");
                             String school_id = jobj.getString("school_id");
                             String name = jobj.getString("name");
                             String dob = jobj.getString("dob");
                             String gender = jobj.getString("gender");
                             String email = jobj.getString("email");
-                            String phone_no = jobj.getString("phone_no");
+                            String phone_no = jobj.getString("phone");
                             String mClass = jobj.getString("class");
                             String section = jobj.getString("section");
                             String image = jobj.getString("image");
                             String password = jobj.getString("password");
                             String active = jobj.getString("active");
-                            String alt_mobile_no = jobj.getString("alt_mobile_no");
+                            String alt_mobile_no = jobj.getString("alt_phone_no");
                             String cnf_password = jobj.getString("cnf_password");
                             String designation = jobj.getString("designation");
                             String address = jobj.getString("address");
@@ -534,7 +601,11 @@ public class AddTeacherFragment extends Fragment {
                             String created_at = jobj.getString("created_at");
                             String updated_at = jobj.getString("updated_at");
 
-                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
+                        }
                     } catch (JSONException e) {
                         pDialog.dismiss();
                         Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -594,7 +665,7 @@ public class AddTeacherFragment extends Fragment {
 
             }
         } catch (Exception e) {
-            Log.d("expception:", "" + e.getMessage());
+            Log.d("exception:", "" + e.getMessage());
 
         }
     }
@@ -688,4 +759,24 @@ public class AddTeacherFragment extends Fragment {
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void getsuccessPopup() {
+        mDialogBuilder2 = new AlertDialog.Builder(getContext());
+        LayoutInflater li = getLayoutInflater();
+        View popupView = li.inflate(R.layout.popup_message, null);
+        TextView popup_Text = popupView.findViewById(R.id.popup_txt);
+        MaterialButton mOksBtn = popupView.findViewById(R.id.popup_ok);
+
+        mDialogBuilder2.setView(popupView);
+        mDialog2 = mDialogBuilder2.create();
+        mDialog2.show();
+        mOksBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog2.dismiss();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ViewTeacherListFragment()).commit();
+            }
+        });
+    }
 }

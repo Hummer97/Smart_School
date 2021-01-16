@@ -24,6 +24,9 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class StudentView extends AppCompatActivity {
     private String mSchool_Id,mStudent_Id,mSection;
@@ -80,7 +83,7 @@ public class StudentView extends AppCompatActivity {
                     {
                         JSONObject object1 = object.getJSONObject("school-details");
                             String image = object1.getString("image");
-                            Picasso.with(getApplicationContext()).load(Url.Image_url+image).placeholder(R.drawable.logo).into(mProfilePic);
+                            Picasso.with(getApplicationContext()).load(Url.Image_url+image).placeholder(R.drawable.no_image).into(mProfilePic);
                             mStudentName.setText(object1.getString("name"));
                             mRegistrationNo.setText(object1.getString("register_no"));
                             mRollNo.setText(object1.getString("roll_no"));
@@ -89,7 +92,11 @@ public class StudentView extends AppCompatActivity {
                             mParentName.setText(object1.getString("p_name"));
                             mDob.setText(object1.getString("dob"));
                             mSectionName.setText(object1.getString("section"));
-                            mAttendence.setText(object1.getString("attendence_percent"));
+                            // To convert the string to double we will use the following code.
+                            Double attendanceData = Double.valueOf(object1.getString("attendence_percent"));
+
+                            // To set the Decimal Format we will use this code which is written below.
+                            mAttendence.setText(new DecimalFormat("##.#").format(attendanceData)+" %");
                             mClass.setText(object1.getString("class_name"));
                             mProgressDialog.dismiss();
                     }
