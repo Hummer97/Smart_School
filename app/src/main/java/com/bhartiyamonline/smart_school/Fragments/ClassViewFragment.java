@@ -2,9 +2,11 @@ package com.bhartiyamonline.smart_school.Fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.VoiceInteractor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,11 +31,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bhartiyamonline.smart_school.Adapters.ClassViewAdapter;
+import com.bhartiyamonline.smart_school.Interfaces.RecyclerViewClickInterface;
 import com.bhartiyamonline.smart_school.Models.ClassData;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.api.Url;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -42,21 +48,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ClassViewFragment extends Fragment {
-    RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
-    ProgressDialog mProgressDialog;
-    RecyclerView.LayoutManager layoutManager;
+public class ClassViewFragment extends Fragment implements RecyclerViewClickInterface {
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private ProgressDialog mProgressDialog;
+    private RecyclerView.LayoutManager layoutManager;
     private List<ClassData> classDataList;
-    RequestQueue rq;
-    SharedPrefManager sharedPrefManager;
-    String school_ID;
-    int userId;
-    TextInputEditText class_name_txt;
-    ImageView mShowAddClassToast;
-    Button mAddClassBtn ,mCancel_Add_class_popup;
-    private AlertDialog.Builder mDialogBuilder,mDialogBuilder2, mDialogBuilder3;
-    private AlertDialog mDialog,mDialog2,mDialog3;
+    private RequestQueue rq;
+    private ConstraintLayout mConstraintLayout;
+    private SharedPrefManager sharedPrefManager;
+    private String school_ID;
+    private int userId;
+    private TextInputEditText class_name_txt;
+    private ConstraintLayout mLayout;
+    private ImageView mShowAddClassToast;
+    private Button mAddClassBtn ,mCancel_Add_class_popup;
+    private AlertDialog.Builder mDialogBuilder,mDialogBuilder2, mWarning_DialogBuilder,mError_DialogBuilder;
+    private AlertDialog mDialog,mDialog2,mWarning_Dialog,mError_Dialog;
+    private String msg;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +88,18 @@ public class ClassViewFragment extends Fragment {
         userId = sharedPrefManager.getUser().getId();
         mShowAddClassToast = view.findViewById(R.id.show_class_add_btn);
         mProgressDialog = new ProgressDialog(getContext());
+        mLayout = view.findViewById(R.id.class_view_layout);
         Log.d("ClassView", "User ID is: "+userId);
         rq = Volley.newRequestQueue(getContext());
-
+        mConstraintLayout = view.findViewById(R.id.class_view_layout);
         mProgressDialog.setMessage("Please Wait...");
         mProgressDialog.show();
         getClassApiData();
         mShowAddClassToast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mProgressDialog.setMessage("Please Wait...");
+                mProgressDialog.show();
                 createAddClassPopup();
             }
 
@@ -97,6 +109,7 @@ public class ClassViewFragment extends Fragment {
     }
 
     private void createAddClassPopup() {
+        mProgressDialog.dismiss();
         mDialogBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater li = getLayoutInflater();
         View popupView = li.inflate(R.layout.add_class_popup, null);
@@ -110,9 +123,10 @@ public class ClassViewFragment extends Fragment {
         mAddClassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mProgressDialog.setMessage("Please Wait...");
+                mProgressDialog.show();
                 addClassApi();
-                mDialog.dismiss();
-                getsuccessPopup();
+
             }
         });
         mCancel_Add_class_popup.setOnClickListener(new View.OnClickListener() {
@@ -139,9 +153,31 @@ public class ClassViewFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            String s = response.getString("status");
-                            Log.d("ClassView", "Response is: "+s);
-                            getClassApiData();
+                            String status = response.getString("status");
+                            String msg = response.getString("msg");
+                            Log.d("ClassView", "Response is: "+status);
+                            if(status.equals("200"))
+                            {
+                                mDialog.dismiss();
+                                mProgressDialog.dismiss();
+
+                                getsuccessPopup(msg);
+                                getClassApiData();
+                            }
+                            else if(status.equals("201"))
+                            {
+                                mDialog.dismiss();
+                                mProgressDialog.dismiss();
+
+                                getWarningPopup(msg);
+                            }
+                            else
+                            {
+                                mProgressDialog.dismiss();
+                                mDialog.dismiss();
+                                Snackbar.make(mLayout, "Something went wrong", Snackbar.LENGTH_SHORT).show();
+                            }
+
                         } catch (JSONException e) {
                             Log.d("ClassView", "Exception is: "+e.getMessage());
                         }
@@ -158,12 +194,13 @@ public class ClassViewFragment extends Fragment {
         rq.add(jsonObjectRequest);
     }
 
-    private void getsuccessPopup() {
+    private void getsuccessPopup(String msg) {
         mDialogBuilder2 = new AlertDialog.Builder(getContext());
         LayoutInflater li = getLayoutInflater();
         View popupView = li.inflate(R.layout.popup_message, null);
         MaterialButton mOksBtn = popupView.findViewById(R.id.popup_ok);
-
+        TextView mTextMsg = popupView.findViewById(R.id.popup_txt);
+        mTextMsg.setText(msg);
         mDialogBuilder2.setView(popupView);
         mDialog2 = mDialogBuilder2.create();
         mDialog2.show();
@@ -174,7 +211,23 @@ public class ClassViewFragment extends Fragment {
             }
         });
     }
-
+    private void getWarningPopup(String msg) {
+        mWarning_DialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater mLayoutInflater = getLayoutInflater();
+        View mView = mLayoutInflater.inflate(R.layout.popup_warning_message, null);
+        MaterialButton mWarning_Ok_Btn = mView.findViewById(R.id.warning_popup_ok);
+        TextView mMsg = mView.findViewById(R.id.warning_popup_txt_msg);
+        mMsg.setText(msg);
+        mWarning_DialogBuilder.setView(mView);
+        mWarning_Dialog = mWarning_DialogBuilder.create();
+        mWarning_Dialog.show();
+        mWarning_Ok_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mWarning_Dialog.dismiss();
+            }
+        });
+    }
     private void getClassApiData() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Url.SHOW_CLASS_API+"school_id="+school_ID,
@@ -186,6 +239,7 @@ public class ClassViewFragment extends Fragment {
                     try{
                         JSONObject object = new JSONObject(response);
                         String status = object.getString("status");
+                        String msg = object.getString("msg");
                         if (status.equals("200")){
                             JSONArray jsonArray = object.getJSONArray("class-details");
                             classDataList.clear();
@@ -198,11 +252,15 @@ public class ClassViewFragment extends Fragment {
                                 String created_at = object1.getString("created_at");
                                 String updated_at = object1.getString("updated_at");
                                 classDataList.add(new ClassData(id,school_id,class_name,active,created_at,updated_at));
-                                mAdapter = new ClassViewAdapter(getContext(),classDataList);
+                                mAdapter = new ClassViewAdapter(getContext(), classDataList,ClassViewFragment.this);
                                 recyclerView.setAdapter(mAdapter);
                                 mProgressDialog.dismiss();
                                // itemTouchHolder(mAdapter);
                             }
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (JSONException e) {
@@ -217,6 +275,9 @@ public class ClassViewFragment extends Fragment {
         });
         rq.add(stringRequest);
     }
+
+
+
 
 //    private void itemTouchHolder(RecyclerView.Adapter adapter) {
 //        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
@@ -262,18 +323,115 @@ public class ClassViewFragment extends Fragment {
 //        });
 //    }
 
-    private void deleteCLASS(int position,String sectionid){
-        StringRequest request = new StringRequest(Request.Method.DELETE, "https://bhartiyamonline.com/schoolcrm/api/delete-section/"+sectionid, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+//    private void deleteCLASS(int position,String sectionid){
+//        StringRequest request = new StringRequest(Request.Method.DELETE, "https://bhartiyamonline.com/schoolcrm/api/delete-section/"+sectionid, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//    }
 
-            }
-        }, new Response.ErrorListener() {
+    @Override
+    public void OnItemClick(int position) {
+        getErrorPopup(position);
+    }
+
+    @Override
+    public void OnItemLongClick(int position) {
+
+    }
+
+
+    private void getErrorPopup(int position) {
+        mError_DialogBuilder = new AlertDialog.Builder(getContext());
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.popup_delete_warning, null);
+        MaterialButton mYes_Btn = mView.findViewById(R.id.delete_popup_yes_btn);
+        MaterialButton mNo_Btn = mView.findViewById(R.id.delete_popup_no_btn);
+
+        TextView mMsg = mView.findViewById(R.id.error_popup_msg_txt);
+        mMsg.setText("You want to this data which is in "+position+" position");
+        mError_DialogBuilder.setView(mView);
+        mError_Dialog = mError_DialogBuilder.create();
+        mError_Dialog.show();
+        mYes_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onClick(View v) {
+
+                mError_Dialog.dismiss();
+                mProgressDialog.setMessage("Please wait..");
+                mProgressDialog.show();
+                getDeleteAPI(position);
 
             }
         });
+        mNo_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mError_Dialog.dismiss();
+            }
+        });
+
     }
 
+    private void getDeleteAPI(int position){
+        try {
+            String classID = classDataList.get(position).getId();
+            JSONObject params = new JSONObject();
+            params.put("id", classID);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Url.DELETE_CLASS_API, params, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        String status = response.getString("status");
+                         msg = response.getString("msg");
+
+                        if (status.equals("200"))
+                        {
+                            mProgressDialog.dismiss();
+                            getsuccessPopup(msg);
+                            getClassApiData();
+                        }
+                        else if(status.equals("201"))
+                        {
+                            mProgressDialog.dismiss();
+                            getWarningPopup(msg);
+                        }
+                        else
+                        {
+                            mProgressDialog.dismiss();
+                            Snackbar.make(mConstraintLayout, "Something went wrong!", Snackbar.LENGTH_LONG).show();
+                        }
+
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                        Snackbar.make(mConstraintLayout, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Snackbar.make(mConstraintLayout, error.getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            });
+            rq.add(jsonObjectRequest);
+            Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG).show();
+            mWarning_Dialog.dismiss();
+        }
+        catch (Exception e)
+        {
+            Snackbar.make(mConstraintLayout, e.getMessage(), Snackbar.LENGTH_LONG).show();
+        }
+
+
+
+    }
 }

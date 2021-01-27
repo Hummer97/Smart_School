@@ -20,6 +20,9 @@ public class Url {
     public static final String ADD_TEACHER_API = BASE_URL+"teacher-submit";
     public static final String SHOW_STUDENT_DETAILS_API = BASE_URL+"student-details/";
     public static final String SHOW_TEACHER_DETAILS_API = BASE_URL+"teacher-details/";
+    public static final String DELETE_CLASS_API = BASE_URL+"class-delete";
+    public static final String DELETE_SECTION_API = BASE_URL+"section-delete";
+    public static final String DASHBOARD_LIST_DATA_API = BASE_URL+"dashboard-tile-data?";
 
 
 }

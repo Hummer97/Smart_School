@@ -24,11 +24,13 @@
         <activity android:name=".Activities.StudentView" />
         <activity
             android:name=".Activities.LogInActivity"
-            android:theme="@style/Theme.Smart_School.NoActionBar" />
+            android:theme="@style/Theme.Smart_School.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
 
             android:name=".Activities.MainActivity"
-            android:theme="@style/Theme.Smart_School.NoActionBar" />
+            android:theme="@style/Theme.Smart_School.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:theme="@style/Theme.Smart_School.NoActionBar">

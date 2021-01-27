@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/product_grid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/product_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:elevation="8dp"
-    android:layout_alignParentBottom="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="40dp"
-
-            tools:context=".Activities.StudentRegistrationActivity">
+            android:paddingBottom="40dp">
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -35,6 +41,7 @@
                 android:id="@+id/add_student_img_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="TODO"
                 app:layout_constraintBottom_toBottomOf="@+id/add_student_profile_image"
                 app:layout_constraintEnd_toEndOf="@+id/add_student_profile_image"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -42,7 +49,6 @@
                 app:layout_constraintTop_toTopOf="@+id/add_student_profile_image"
                 app:layout_constraintVertical_bias="0.91"
                 app:srcCompat="@drawable/ic_baseline_add_circle_24"
-                android:contentDescription="TODO"
                 tools:ignore="VectorDrawableCompat" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -66,23 +72,23 @@
                     android:hint="Student Registration No" />
             </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/add_student_name_txt"
-                    style="@style/Widget.Smart_School.TextInputLayout"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_student_name_txt"
+                style="@style/Widget.Smart_School.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_student_register_no_txt">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_student_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/add_student_register_no_txt">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/add_student_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Name" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Name" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_student_parent_name_txt"
@@ -102,41 +108,42 @@
                     android:ems="10"
                     android:hint="Parent Name" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:id="@+id/add_student_DOB_txt"
                 style="@style/Widget.Smart_School.TextInputLayout"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="DOB"
-                android:layout_height="50dp"
+                android:background="@drawable/edittextbackground"
                 android:gravity="center_vertical"
                 android:paddingStart="14dp"
-                android:background="@drawable/edittextbackground"
+                android:text="DOB"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_student_parent_name_txt"
 
                 />
 
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/add_student_DOB_txt"-->
-<!--                style="@style/Widget.Smart_School.TextInputLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginEnd="24dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/add_student_parent_name_txt">-->
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/add_student_DOB_txt"-->
+            <!--                style="@style/Widget.Smart_School.TextInputLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="24dp"-->
+            <!--                android:layout_marginEnd="24dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/add_student_parent_name_txt">-->
 
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/add_student_DOB"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:ems="10"-->
-<!--                    android:hint="DOB" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/add_student_DOB"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:ems="10"-->
+            <!--                    android:hint="DOB" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_student_Roll_no_txt"
@@ -153,9 +160,9 @@
                     android:id="@+id/add_student_Roll_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:ems="10"
-                    android:hint="Roll No" />
+                    android:hint="Roll No"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -163,34 +170,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:orientation="horizontal"
-                android:layout_marginRight="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginRight="24dp"
                 android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_student_Roll_no_txt">
 
 
-                    <Spinner
-                        android:id="@+id/add_student_class_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginRight="4dp"
-                        android:background="@drawable/edittextbackground"
-                        android:layout_height="50dp"
-                        android:hint="Select Class" />
+                <Spinner
+                    android:id="@+id/add_student_class_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittextbackground"
+                    android:hint="Select Class" />
 
 
-              <Spinner
-                  android:layout_width="match_parent"
-                  android:layout_weight="1"
-                  android:id="@+id/add_student_section_dropdown"
-                  android:layout_marginLeft="4dp"
-                  android:background="@drawable/edittextbackground"
-                  android:layout_height="50dp">
+                <Spinner
+                    android:id="@+id/add_student_section_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittextbackground">
 
-              </Spinner>
+                </Spinner>
             </LinearLayout>
 
 
@@ -209,10 +216,10 @@
                     android:id="@+id/add_student_Mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:ems="10"
-                    android:maxLength="10"
-                    android:hint="Father's Mobile No" />
+                    android:hint="Father's Mobile No"
+                    android:inputType="number"
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -230,10 +237,10 @@
                     android:id="@+id/add_student_parent_Mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:ems="10"
-                    android:maxLength="10"
-                    android:hint="Mother's Mobile No" />
+                    android:hint="Mother's Mobile No"
+                    android:inputType="number"
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -251,16 +258,16 @@
                     android:id="@+id/add_student_alternative_Mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:ems="10"
-                    android:maxLength="10"
-                    android:hint="Alternative Mobile No" />
+                    android:hint="Alternative Mobile No"
+                    android:inputType="number"
+                    android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_student_submit_btn"
-                android:layout_width="match_parent"
                 style="@style/Widget.Smart_School.Button"
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
@@ -269,6 +276,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_student_alternative_Mobile_no_txt" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

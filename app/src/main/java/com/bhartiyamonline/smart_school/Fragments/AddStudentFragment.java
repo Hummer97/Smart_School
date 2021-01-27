@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -45,6 +46,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bhartiyamonline.smart_school.Activities.MainActivity;
 import com.bhartiyamonline.smart_school.Activities.Multipart.MultipartRequest;
 import com.bhartiyamonline.smart_school.Activities.Multipart.NetworkOperationHelper;
 import com.bhartiyamonline.smart_school.Adapters.SpinerSectionAdapter;
@@ -57,6 +59,7 @@ import com.bhartiyamonline.smart_school.api.Url;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -94,6 +97,7 @@ public class AddStudentFragment extends Fragment {
     private String mStudentName,mParentName,mDob,mRollNo,mClass,mSection,mMobileNo,mParentMobileNo,mAlterMobileNo,mStudentRegistrationNo;
     private ImageView select_profile;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private NestedScrollView mainLayout;
 
     //////////////////////////////////////////kalpana////////////////////////////
     //////////////////////////imageupload////////////////////////////////////
@@ -123,6 +127,7 @@ public class AddStudentFragment extends Fragment {
         arrayList = new ArrayList<>();
         rq = Volley.newRequestQueue(getContext());
         mImg_btn = view.findViewById(R.id.add_student_img_btn);
+        mainLayout = view.findViewById(R.id.add_student_mainLayout);
         //All EditBox references
         select_profile = view.findViewById(R.id.add_student_profile_image);
         mStudentRegistrationNo_EditTxt=view.findViewById(R.id.add_student_register_no);
@@ -293,7 +298,7 @@ public class AddStudentFragment extends Fragment {
                 mStudentName = mStudentName_EditTxt.getText().toString().trim();
                 mStudentRegistrationNo = mStudentRegistrationNo_EditTxt.getText().toString().trim();
                 mParentName = mParentName_EditTxt.getText().toString().trim();
-                mDob = mDob_EditTxt.getText().toString().trim();
+                mDob = mDOB_txt.getText().toString().trim();
                 mRollNo = mRollNo_EditTxt.getText().toString().trim();
                 mMobileNo = mMobileNo_EditTxt.getText().toString().trim();
                 mParentMobileNo = mParentMobileNo_EditTxt.getText().toString().trim();
@@ -789,7 +794,13 @@ public class AddStudentFragment extends Fragment {
 
                             }
                             Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                        }else
+                        }
+                        else if(status.equals("201"))
+                        {
+                            pDialog.dismiss();
+                            snackBar("The register no has already been taken.");
+                        }
+                        else
                         {
                             pDialog.dismiss();
                             Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
@@ -815,6 +826,10 @@ public class AddStudentFragment extends Fragment {
 
         }
 
+    }
+
+    private void snackBar(String msg) {
+        Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
     }
 
     private void showCustomDialog1decline(String s) {

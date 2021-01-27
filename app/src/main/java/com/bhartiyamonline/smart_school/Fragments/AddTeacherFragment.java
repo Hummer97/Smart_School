@@ -541,9 +541,6 @@ public class AddTeacherFragment extends Fragment {
         params.put("active","1");
         params.put("gender",mGender);
 
-
-
-
         try {
             MultipartRequest req = new MultipartRequest(Url.ADD_TEACHER_API, new Response.ErrorListener() {
                 @Override
@@ -600,7 +597,6 @@ public class AddTeacherFragment extends Fragment {
                             String joining_date = jobj.getString("joining_date");
                             String created_at = jobj.getString("created_at");
                             String updated_at = jobj.getString("updated_at");
-
                             Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
                         }else
                         {
