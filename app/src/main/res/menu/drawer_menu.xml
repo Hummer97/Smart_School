@@ -4,6 +4,16 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
+            android:title="Dashboard">
+            <menu>
+                <item
+                    android:id="@+id/nav_dashboard"
+                    android:title="Dashboard"/>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
             android:title="Student Manager">
             <menu>
                 <item
@@ -38,6 +48,9 @@
                 <item
                     android:id="@+id/nav_section_add_view"
                     android:title="Added Section View"/>
+                <item
+                    android:id="@+id/nav_sms_view"
+                    android:title="SMS Panel"/>
             </menu>
         </item>
     </group>

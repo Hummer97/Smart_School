@@ -94,6 +94,7 @@ public class AddStudentFragment extends Fragment {
     private RequestQueue rq;
     private final String filePatadhar = "";
     private int mUserId;
+    private String mSection_id;
     private String mStudentName,mParentName,mDob,mRollNo,mClass,mSection,mMobileNo,mParentMobileNo,mAlterMobileNo,mStudentRegistrationNo;
     private ImageView select_profile;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -276,7 +277,7 @@ public class AddStudentFragment extends Fragment {
 
                         SectionData model = (SectionData) parent.getSelectedItem();
 
-                        String section_id = model.getId();
+                        mSection_id = model.getId();
                         String Section = model.getSection();
                         mSection = model.getSection();
 
@@ -734,7 +735,7 @@ public class AddStudentFragment extends Fragment {
         params.put("p_name",mParentName);
         params.put("class",mClass_id);
         params.put("dob",mDob);
-        params.put("section",mSection);
+        params.put("section",mSection_id);
         params.put("active","1");
 
         try {
@@ -767,9 +768,10 @@ public class AddStudentFragment extends Fragment {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        String status =object.getString("status");
-                        String msg =object.getString("msg");
+                        String status = object.getString("status");
+                        //String msg =object.getString("msg");
                         if(status.equals("200")) {
+                            String msg = object.getString("msg");
                             pDialog.dismiss();
                             getsuccessPopup();
                             JSONArray student = object.getJSONArray("student");
@@ -793,12 +795,13 @@ public class AddStudentFragment extends Fragment {
                                 String updated_at = jobj.getString("updated_at");
 
                             }
-                            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                        }
-                        else if(status.equals("201"))
+                            Toast.makeText(getActivity(), "Status:200 ", Toast.LENGTH_SHORT).show();
+                        }else if(status.equals("201"))
                         {
                             pDialog.dismiss();
-                            snackBar("The register no has already been taken.");
+                            JSONObject msgObj = object.getJSONObject("message");
+                            String msg = msgObj.getString("register_no");
+                            Toast.makeText(getContext(),"The register no has already been taken.",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -807,8 +810,7 @@ public class AddStudentFragment extends Fragment {
                         }
                     } catch (JSONException e) {
                         pDialog.dismiss();
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "JSON Exception"+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }, params);
@@ -821,16 +823,16 @@ public class AddStudentFragment extends Fragment {
 
         } catch (UnsupportedEncodingException | NullPointerException e) {
             pDialog.dismiss();
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"outer Catch" +e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
 
         }
 
     }
 
-    private void snackBar(String msg) {
-        Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
-    }
+//    private void snackBar(String msg) {
+//        Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
+//    }
 
     private void showCustomDialog1decline(String s) {
         Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();

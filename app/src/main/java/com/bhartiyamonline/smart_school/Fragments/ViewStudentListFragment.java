@@ -123,7 +123,7 @@ public class ViewStudentListFragment extends Fragment {
                                 mProgressDialog.setMessage("Please wait..");
                                 mProgressDialog.show();
 //                                recyclerView.setVisibility(View.VISIBLE);
-                                getStudentDataApi(classId,Section);
+                                getStudentDataApi(classId,section_id);
                             }
                             else
                             {

@@ -99,7 +99,7 @@ public class AddTeacherFragment extends Fragment {
     private static int RESULT_LOAD_IMAGE = 1;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     ProgressDialog pDialog;
-    private String mTeacherName,mDob,mGender,mClass,mSection,mEmail,mPassword,mC_Password,mMobileNo,mAlterMobileNo,mClass_id,school_id;
+    private String mTeacherName,mDob,mGender,mClass,mSection,mSection_id,mEmail,mPassword,mC_Password,mMobileNo,mAlterMobileNo,mClass_id,school_id;
     private ImageView select_profile;
     ///////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -266,7 +266,7 @@ public class AddTeacherFragment extends Fragment {
 
                         SectionData model = (SectionData) parent.getSelectedItem();
 
-                        String section_id = model.getId();
+                        mSection_id = model.getId();
                         String Section = model.getSection();
                         mSection = model.getSection();
 
@@ -537,7 +537,7 @@ public class AddTeacherFragment extends Fragment {
         params.put("alternateno",mAlterMobileNo);
         params.put("class",mClass_id);
         params.put("dob",mDob);
-        params.put("section",mSection);
+        params.put("section",mSection_id);
         params.put("active","1");
         params.put("gender",mGender);
 
