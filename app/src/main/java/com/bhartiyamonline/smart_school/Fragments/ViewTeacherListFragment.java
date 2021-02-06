@@ -3,6 +3,7 @@ package com.bhartiyamonline.smart_school.Fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.bhartiyamonline.smart_school.Models.TeacherData;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.api.Url;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +39,8 @@ public class ViewTeacherListFragment extends Fragment {
     private SharedPrefManager sharedPrefManager;
     private List<TeacherData> teacherDataList;
     private ProgressDialog mProgressDialog;
+    private ConstraintLayout mConstraintLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class ViewTeacherListFragment extends Fragment {
         teacherDataList = new ArrayList<TeacherData>();
         recyclerView = view.findViewById(R.id.teacher_list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mConstraintLayout = view.findViewById(R.id.teacher_mainLayout);
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setMessage("Please wait...");
         mProgressDialog.show();
@@ -99,14 +104,16 @@ public class ViewTeacherListFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     mProgressDialog.dismiss();
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    Snackbar.make(mConstraintLayout,"Exception: "+e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mProgressDialog.dismiss();
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Snackbar.make(mConstraintLayout,"Error: "+error.getMessage(), Snackbar.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         RequestQueue rq = Volley.newRequestQueue(getContext());

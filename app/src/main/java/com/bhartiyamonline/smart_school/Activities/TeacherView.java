@@ -1,10 +1,12 @@
 package com.bhartiyamonline.smart_school.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.api.Url;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -31,6 +34,7 @@ public class TeacherView extends AppCompatActivity {
     private ImageView mProfilePic;
     private TextView mTeacherName,mEmail,mPhoneNo,mAltrPhoneNo,mGender,mDob,mSectionName,mClass;
     private ProgressDialog mProgressDialog;
+    private ConstraintLayout mConstraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class TeacherView extends AppCompatActivity {
 
         sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         mSchool_Id = sharedPrefManager.getUser().getSchool_id();
+        mConstraintLayout = findViewById(R.id.teacher_view_mainLayout);
         bundle = getIntent().getExtras();
         mTeacher_Id = bundle.getString("teacher_id");
         mProfilePic = findViewById(R.id.teacher_profile_image);
@@ -60,7 +65,8 @@ public class TeacherView extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "Data Not Found", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mConstraintLayout,"Data Not Found", Snackbar.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Data Not Found", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -93,14 +99,16 @@ public class TeacherView extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     mProgressDialog.dismiss();
-                    Toast.makeText(TeacherView.this, "Exception : "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mConstraintLayout,"Exception : "+e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(TeacherView.this, "Exception : "+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mProgressDialog.dismiss();
-                Toast.makeText(TeacherView.this, "Error : "+error.getMessage(),Toast.LENGTH_SHORT).show();
+                Snackbar.make(mConstraintLayout,"Error : "+error.getMessage(), Snackbar.LENGTH_LONG).show();
+                //Toast.makeText(TeacherView.this, "Error : "+error.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue rq = Volley.newRequestQueue(getApplicationContext());

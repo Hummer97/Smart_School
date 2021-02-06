@@ -1,6 +1,7 @@
 package com.bhartiyamonline.smart_school.Fragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.api.Url;
 import com.bhartiyamonline.smart_school.constant.SMSConstant;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 
@@ -48,6 +51,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SmsFragment extends Fragment {
@@ -55,17 +59,17 @@ public class SmsFragment extends Fragment {
     private SharedPrefManager mSharedPrefManager;
     private String mSchoolID,mCommaSeparatedMobileNoList;
     private List<TotalStudentData> mTotalStudentData;
-    private LinearLayout mLinearLayout;
     private RecyclerView mRecyclerView;
     private boolean mFlag = false;
-    private Button mSelectBtn,mSendBtn,mUnSelect,mClick;
+    private Button mSelectBtn,mUnSelect,mClick;
     private Sms_TotalStudentAdapter mAdapter;
-    private AlertDialog.Builder mDialogBuilder;
+    private AlertDialog.Builder mDialogBuilder,mWarning_DialogBuilder;
     private View smsPopup;
-    private AlertDialog mDialog;
+    private AlertDialog mDialog,mWarning_Dialog;
     private TextView mMessage;
-    private Toolbar mToolbar;
-    private ImageView mSendBtnCheck;
+    private ImageButton mSendBtn;
+    private ProgressDialog mProgressDialog;
+    private Button mCancel_btn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,50 +82,61 @@ public class SmsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sms, container, false);
-        FragmentActivity fragmentActivity = this.requireActivity();
-        mToolbar = (Toolbar)view.findViewById(R.id.toolbar);
         mTotalStudentData = new ArrayList<TotalStudentData>();
         mMain_Layout = view.findViewById(R.id.sms_main_layout);
         mSharedPrefManager = SharedPrefManager.getInstance(getContext());
         mSchoolID = mSharedPrefManager.getUser().getSchool_id();
         mRecyclerView = view.findViewById(R.id.rc_sms);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mLinearLayout = view.findViewById(R.id.sms_button_layout);
         mSelectBtn = view.findViewById(R.id.sms_select_btn);
         mSendBtn = view.findViewById(R.id.sms_send_msg_btn);
         mUnSelect = view.findViewById(R.id.sms_unSelect_btn);
+        mProgressDialog = new ProgressDialog(getContext());
         mDialogBuilder = new AlertDialog.Builder(getContext());
 
-        ((AppCompatActivity)fragmentActivity).setSupportActionBar(mToolbar);
 
         mSelectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mFlag = true;
+                mProgressDialog.setMessage("Please Wait..");
+                mProgressDialog.show();
                 getTotalStudentAPI(mFlag);
                 mSelectBtn.setVisibility(View.GONE);
-                mLinearLayout.setVisibility(View.VISIBLE);
+                mUnSelect.setVisibility(View.VISIBLE);
             }
         });
 
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("SMSFragment", SMSConstant.MOBILE_NO_LIST.toString());
-                Log.d("SMSFragment", String.valueOf(SMSConstant.MOBILE_NO_LIST.size()));
-                int noCount = Integer.valueOf(SMSConstant.MOBILE_NO_LIST.size());
-                mCommaSeparatedMobileNoList = getMobileNumStringList();
-                sendSMSPopup(noCount);
-
+                if (Integer.valueOf(SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.size())>0)
+                {
+                    mProgressDialog.setMessage("Please Wait..");
+                    mProgressDialog.show();
+                    Log.d("SMSFragment", SMSConstant.MOBILE_NO_LIST.toString());
+                    Log.d("SMSFragment", String.valueOf(SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.size()));
+                    int noCount = Integer.valueOf(SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.size());
+                    mCommaSeparatedMobileNoList = getMobileNumStringList();
+                    sendSMSPopup(noCount);
+                }
+                else
+                {
+                    mProgressDialog.setMessage("Please Wait..");
+                    mProgressDialog.show();
+                    getWarningPopUp("Please select student first!");
+                }
             }
         });
 
-            mUnSelect.setOnClickListener(new View.OnClickListener() {
+        mUnSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mFlag = false;
+                    mProgressDialog.setMessage("Please Wait..");
+                    mProgressDialog.show();
                     getTotalStudentAPI(mFlag);
-                    mLinearLayout.setVisibility(View.GONE);
+                    mUnSelect.setVisibility(View.GONE);
                     mSelectBtn.setVisibility(View.VISIBLE);
                     SMSConstant.MOBILE_NO_LIST.clear();
                     Log.d("SMSFragment", SMSConstant.MOBILE_NO_LIST.toString());
@@ -129,18 +144,19 @@ public class SmsFragment extends Fragment {
             });
         if(mFlag)
         {
+            mProgressDialog.setMessage("Please Wait..");
+            mProgressDialog.show();
             getTotalStudentAPI(true);
         }
         else
         {
+            mProgressDialog.setMessage("Please Wait..");
+            mProgressDialog.show();
             getTotalStudentAPI(false);
         }
 
-
-
         return view;
     }
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.btn_group_menu, menu);
@@ -174,7 +190,7 @@ public class SmsFragment extends Fragment {
                                 Sms_TotalStudentAdapter sms_totalStudentAdapter = new Sms_TotalStudentAdapter(getContext(), mTotalStudentData);
                                 mRecyclerView.setAdapter(sms_totalStudentAdapter);
                                 sms_totalStudentAdapter.notifyDataSetChanged();
-
+                                mProgressDialog.dismiss();
                             }
 
                         }
@@ -198,11 +214,14 @@ public class SmsFragment extends Fragment {
     }
 
     private String getMobileNumStringList() {
+        Collection value = SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.values();
+        ArrayList<String> mListOfMobileNo = new ArrayList<>(value);
+        Log.d("SMSFragment", "ArrayList :"+mListOfMobileNo);
         /////////////////////////////////
         StringBuilder str = new StringBuilder("");
 
         // Traversing the ArrayList
-        for (String eachString : SMSConstant.MOBILE_NO_LIST) {
+        for (String eachString : mListOfMobileNo) {
 
             // Each element in ArrayList is appended
             // followed by comma
@@ -234,7 +253,7 @@ public class SmsFragment extends Fragment {
         mDialogBuilder.setView(smsPopup);
         mMessage = smsPopup.findViewById(R.id.sms_popup_message_txt);
         mClick = smsPopup.findViewById(R.id.sms_popup_send_btn);
-
+        mCancel_btn = smsPopup.findViewById(R.id.sms_popup_cancel_btn);
         mDialog = mDialogBuilder.create();
         mDialog.show();
         mClick.setOnClickListener(new View.OnClickListener() {
@@ -251,9 +270,17 @@ public class SmsFragment extends Fragment {
                 }
                 else
                 {
+
                     setAddSMSRequest();
                 }
 
+            }
+        });
+        mCancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+                mProgressDialog.dismiss();
             }
         });
     }
@@ -271,6 +298,7 @@ public class SmsFragment extends Fragment {
                     try {
                         String status = response.getString("status");
                         String msg = response.getString("msg");
+                        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -372,5 +400,24 @@ public class SmsFragment extends Fragment {
             e.printStackTrace();
         }
 
+    }
+
+    private void getWarningPopUp(String msg) {
+        mProgressDialog.dismiss();
+        mWarning_DialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater mLayoutInflater = getLayoutInflater();
+        View mView = mLayoutInflater.inflate(R.layout.popup_warning_message, null);
+        MaterialButton mWarning_Ok_Btn = mView.findViewById(R.id.warning_popup_ok);
+        TextView mMsg = mView.findViewById(R.id.warning_popup_txt_msg);
+        mMsg.setText(msg);
+        mWarning_DialogBuilder.setView(mView);
+        mWarning_Dialog = mWarning_DialogBuilder.create();
+        mWarning_Dialog.show();
+        mWarning_Ok_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mWarning_Dialog.dismiss();
+            }
+        });
     }
 }

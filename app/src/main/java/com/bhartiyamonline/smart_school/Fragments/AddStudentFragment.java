@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -98,7 +99,7 @@ public class AddStudentFragment extends Fragment {
     private String mStudentName,mParentName,mDob,mRollNo,mClass,mSection,mMobileNo,mParentMobileNo,mAlterMobileNo,mStudentRegistrationNo;
     private ImageView select_profile;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private NestedScrollView mainLayout;
+    private ConstraintLayout mainLayout;
 
     //////////////////////////////////////////kalpana////////////////////////////
     //////////////////////////imageupload////////////////////////////////////
@@ -128,7 +129,7 @@ public class AddStudentFragment extends Fragment {
         arrayList = new ArrayList<>();
         rq = Volley.newRequestQueue(getContext());
         mImg_btn = view.findViewById(R.id.add_student_img_btn);
-        mainLayout = view.findViewById(R.id.add_student_mainLayout);
+        mainLayout = view.findViewById(R.id.add_student_layout);
         //All EditBox references
         select_profile = view.findViewById(R.id.add_student_profile_image);
         mStudentRegistrationNo_EditTxt=view.findViewById(R.id.add_student_register_no);
@@ -260,7 +261,7 @@ public class AddStudentFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
+                        Snackbar.make(mainLayout, "First select Class", Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -308,11 +309,12 @@ public class AddStudentFragment extends Fragment {
                 if(verificationDone())
                 {
                         AddStudentApi();
-                        Toast.makeText(getContext(), mStudentRegistrationNo + mStudentName + mParentName + mDob + mRollNo + mClass + mSection + mMobileNo + mParentMobileNo + mAlterMobileNo, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getContext(), mStudentRegistrationNo + mStudentName + mParentName + mDob + mRollNo + mClass + mSection + mMobileNo + mParentMobileNo + mAlterMobileNo, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Api not hit", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mainLayout, "Api not hit", Snackbar.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -357,12 +359,14 @@ public class AddStudentFragment extends Fragment {
         }
         else if(mClass.isEmpty() || mClass.equals("Select"))
         {
-            Toast.makeText(getContext(), "Please Select Class", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mainLayout, "Please Select Class", Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Please Select Class", Toast.LENGTH_SHORT).show();
             return false;
         }
         else if(mSection.isEmpty() || mSection.equals("No Section") || mSection.equals("Select"))
         {
-            Toast.makeText(getContext(), "Please Select Section", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mainLayout, "Please Select Section", Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Please Select Section", Toast.LENGTH_SHORT).show();
             return false;
         }
         else if(mMobileNo.length()>10 || mMobileNo.length()<10)
@@ -555,7 +559,8 @@ public class AddStudentFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
+                        Snackbar.make(mainLayout, "Data not found", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -795,22 +800,24 @@ public class AddStudentFragment extends Fragment {
                                 String updated_at = jobj.getString("updated_at");
 
                             }
-                            Toast.makeText(getActivity(), "Status:200 ", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Status:200 ", Toast.LENGTH_SHORT).show();
                         }else if(status.equals("201"))
                         {
                             pDialog.dismiss();
                             JSONObject msgObj = object.getJSONObject("message");
                             String msg = msgObj.getString("register_no");
-                            Toast.makeText(getContext(),"The register no has already been taken.",Toast.LENGTH_SHORT).show();
+                            Snackbar.make(mainLayout, "The register no has already been taken.", Snackbar.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(),"The register no has already been taken.",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             pDialog.dismiss();
-                            Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         pDialog.dismiss();
-                        Toast.makeText(getActivity(), "JSON Exception"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(mainLayout, "Exception Found!!", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "JSON Exception"+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }, params);
@@ -823,7 +830,8 @@ public class AddStudentFragment extends Fragment {
 
         } catch (UnsupportedEncodingException | NullPointerException e) {
             pDialog.dismiss();
-            Toast.makeText(getActivity(),"outer Catch" +e.getMessage(), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mainLayout, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),"outer Catch" +e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
 
         }
@@ -835,7 +843,7 @@ public class AddStudentFragment extends Fragment {
 //    }
 
     private void showCustomDialog1decline(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -945,7 +953,8 @@ private void selectImage() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // do your stuff
                 } else {
-                    Toast.makeText(getActivity(), "GET_ACCOUNTS Denied", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mainLayout, "Get Account Denied", Snackbar.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "GET_ACCOUNTS Denied", Toast.LENGTH_SHORT).show();
 //                    showCustomDialog1decline("GET_ACCOUNTS Denied");
 
                 }

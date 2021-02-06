@@ -117,7 +117,8 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                     {
                         mProgressDialog.dismiss();
                         recyclerView.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
+                        Snackbar.make(mConstraintLayout, "First select Class", Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -182,7 +183,8 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                             {
                                 mProgressDialog.dismiss();
                                 recyclerView.setVisibility(View.GONE);
-                                Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
+                                //Snackbar.make(mConstraintLayout, "Data not found", Snackbar.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             mProgressDialog.dismiss();
@@ -239,7 +241,8 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                     }
                     else
                     {
-                        Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
+                        Snackbar.make(mConstraintLayout, "First select Class", Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -313,25 +316,29 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                     }
                     else
                     {
-                            Toast.makeText(getContext(), status, Toast.LENGTH_LONG).show();
+                        Snackbar.make(mConstraintLayout, status, Snackbar.LENGTH_LONG).show();
+                           // Toast.makeText(getContext(), status, Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
                     Log.d("SectionView", "Exception is: "+e.getMessage());
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    Snackbar.make(mConstraintLayout, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("SectionView", "Error is: "+error.getMessage());
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Snackbar.make(mConstraintLayout, error.getMessage(), Snackbar.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         rq.add(jsonObjectRequest);
         }catch (Exception e)
         {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            Snackbar.make(mConstraintLayout, e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -390,10 +397,12 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                             }
                             else
                             {
-                                Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
+                                //Snackbar.make(mConstraintLayout, "Data not found", Snackbar.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Snackbar.make(mConstraintLayout, "Exception: "+e.getMessage(), Snackbar.LENGTH_LONG).show();
                             Log.d("Add Student","Exception:"+e.getMessage());
                         }
 
@@ -401,6 +410,7 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Snackbar.make(mConstraintLayout, "Error: "+error.getMessage(), Snackbar.LENGTH_LONG).show();
                 Log.d("Add Student","Error:"+error.getMessage());
             }
         });
@@ -424,7 +434,7 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
         MaterialButton mNo_Btn = mView.findViewById(R.id.delete_popup_no_btn);
 
         TextView mMsg = mView.findViewById(R.id.error_popup_msg_txt);
-        mMsg.setText("You want to this data which is in "+position+" position");
+        mMsg.setText("You want to delete this data?");
         mError_DialogBuilder.setView(mView);
         mError_Dialog = mError_DialogBuilder.create();
         mError_Dialog.show();
@@ -491,7 +501,7 @@ public class SectionVewFragment extends Fragment implements RecyclerViewClickInt
                 }
             });
             rq.add(jsonObjectRequest);
-            Snackbar.make(mConstraintLayout, "msg", Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(mConstraintLayout, "msg", Snackbar.LENGTH_LONG).show();
             mWarning_Dialog.dismiss();
         }
         catch (Exception e)

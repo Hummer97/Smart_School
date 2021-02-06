@@ -10,6 +10,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -17,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="UnknownId">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_sms"
@@ -46,37 +48,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/sms_button_layout"
+    <ImageButton
+        android:id="@+id/sms_send_msg_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/ic_send_btn"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sms_unSelect_btn"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:text="UnSelect"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sms_unSelect_btn"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginRight="1dp"
-            android:background="@color/colorPrimary"
-            android:text="UnSelect" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sms_send_msg_btn"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="1dp"
-            android:background="@color/colorPrimary"
-            android:text="Send Message" />
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

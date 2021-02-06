@@ -260,7 +260,8 @@ public class ClassViewFragment extends Fragment implements RecyclerViewClickInte
                         }
                         else
                         {
-                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(mConstraintLayout, "Something went wrong!", Snackbar.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (JSONException e) {
@@ -423,7 +424,7 @@ public class ClassViewFragment extends Fragment implements RecyclerViewClickInte
                 }
             });
             rq.add(jsonObjectRequest);
-            Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG).show();
             mWarning_Dialog.dismiss();
         }
         catch (Exception e)

@@ -17,8 +17,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -60,6 +62,7 @@ import com.bhartiyamonline.smart_school.api.Url;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -86,6 +89,7 @@ public class AddTeacherFragment extends Fragment {
     private TextInputEditText mTeacherName_EditTxt,mMobileNo_EditTxt,mEmail_EditTxt,mAlterMobileNo_EditTxt,
             mPassword_EditTxt,mC_Password_EditTxt;
     private TextView mDob_EditTxt;
+    private NestedScrollView mMainLayout;
     private MaterialButton mSubmitBtn;
     private ImageView mAdd_Img_btn;
     private AlertDialog.Builder mDialogBuilder,mDialogBuilder2;
@@ -132,7 +136,7 @@ public class AddTeacherFragment extends Fragment {
         mC_Password_EditTxt = view.findViewById(R.id.add_teacher_confirm_password);
         mSubmitBtn = view.findViewById(R.id.add_teacher_submit_btn);
         mAdd_Img_btn = view.findViewById(R.id.add_teacher_img_btn);
-
+        mMainLayout = view.findViewById(R.id.add_teacher_mainLayout);
 
         MaterialDatePicker.Builder builder= MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select DOB");
@@ -249,7 +253,8 @@ public class AddTeacherFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
+                        Snackbar.make(mMainLayout, "First Select Class", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -299,11 +304,12 @@ public class AddTeacherFragment extends Fragment {
                 if(verificationDone())
                 {
                     AddTeacherApi();
-                    Toast.makeText(getContext(), mTeacherName + mDob + mGender + mDob + mEmail + mClass + mSection + mMobileNo +mAlterMobileNo+mPassword+mC_Password, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), mTeacherName + mDob + mGender + mDob + mEmail + mClass + mSection + mMobileNo +mAlterMobileNo+mPassword+mC_Password, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Api not hit", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mMainLayout, "Api not hit", Snackbar.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Api not hit", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -334,12 +340,14 @@ public class AddTeacherFragment extends Fragment {
         }
         else if(mClass.isEmpty() || mClass.equals("Select"))
         {
-            Toast.makeText(getContext(), "Please Select Class", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayout, "Please Select Class", Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Please Select Class", Toast.LENGTH_SHORT).show();
             return false;
         }
         else if(mSection.isEmpty() || mSection.equals("No Section") || mSection.equals("Select"))
         {
-            Toast.makeText(getContext(), "Please Select Section", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayout, "Please Select Section", Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Please Select Section", Toast.LENGTH_SHORT).show();
             return false;
         }
         else if(TextUtils.isEmpty(mEmail))
@@ -504,7 +512,8 @@ public class AddTeacherFragment extends Fragment {
                             }
                             else
                             {
-                                Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
+                                Snackbar.make(mMainLayout, "Data not found", Snackbar.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -597,15 +606,18 @@ public class AddTeacherFragment extends Fragment {
                             String joining_date = jobj.getString("joining_date");
                             String created_at = jobj.getString("created_at");
                             String updated_at = jobj.getString("updated_at");
-                            Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(mMainLayout, msg, Snackbar.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
                         }else
                         {
-                            Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(mMainLayout, msg, Snackbar.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         pDialog.dismiss();
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                        Snackbar.make(mMainLayout, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        e.printStackTrace();
                     }
                 }
             }, params);
@@ -620,19 +632,21 @@ public class AddTeacherFragment extends Fragment {
 
         } catch (UnsupportedEncodingException e) {
             pDialog.dismiss();
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            Snackbar.make(mMainLayout, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            //e.printStackTrace();
 
         } catch (NullPointerException e) {
             pDialog.dismiss();
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            Snackbar.make(mMainLayout, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
         }
 
     }
 
     private void showCustomDialog1decline(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -743,7 +757,8 @@ public class AddTeacherFragment extends Fragment {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // do your stuff
                 } else {
-                    Toast.makeText(getActivity(), "GET_ACCOUNTS Denied", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mMainLayout, "GET_ACCOUNTS Denied", Snackbar.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity(), "GET_ACCOUNTS Denied", Toast.LENGTH_SHORT).show();
 //                    showCustomDialog1decline("GET_ACCOUNTS Denied");
 
                 }

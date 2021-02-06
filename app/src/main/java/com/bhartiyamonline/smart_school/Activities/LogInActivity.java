@@ -2,6 +2,7 @@ package com.bhartiyamonline.smart_school.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -31,6 +32,7 @@ import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.VolleySingleTon.VolleySingleton;
 import com.bhartiyamonline.smart_school.api.Url;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -51,6 +53,7 @@ public class LogInActivity extends AppCompatActivity {
     private AlertDialog mDialog;
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    private ConstraintLayout mConstraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class LogInActivity extends AppCompatActivity {
         logIn_btn = findViewById(R.id.logIn_btn);
         mUserId = findViewById(R.id.login_email_edit_txt);
         mPassword = findViewById(R.id.login_password_edit_txt);
+        mConstraintLayout = findViewById(R.id.login_mainLayout);
         mProgressDialog = new ProgressDialog(LogInActivity.this);
         mProgressDialog.setMessage("Please wait..");
 
@@ -136,25 +140,28 @@ public class LogInActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 
                             }else{
 //                                getsuccessPopup(msg);
-                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                Snackbar.make(mConstraintLayout,msg, Snackbar.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                 mProgressDialog.dismiss();
                             }
 
 
                     } catch (JSONException e) {
                         Log.d("Login","Not Response: "+e.getMessage());
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        Snackbar.make(mConstraintLayout,"Exception: "+e.getMessage(), Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Login","Error: "+error.getMessage());
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    Snackbar.make(mConstraintLayout,"Error: "+error.getMessage(), Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
 

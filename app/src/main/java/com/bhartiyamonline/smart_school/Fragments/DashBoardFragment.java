@@ -1,5 +1,6 @@
 package com.bhartiyamonline.smart_school.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -41,6 +42,7 @@ public class DashBoardFragment extends Fragment {
     public static String mSMSCount;
     private RequestQueue rq;
     private MaterialButton mSendMsgBtn;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,9 @@ public class DashBoardFragment extends Fragment {
         mDashboard_StudentCount_txt=view.findViewById(R.id.dashboard_student_count_txt);
         mDashboard_TeacherCount_txt=view.findViewById(R.id.dashboard_teacher_count_txt);
         mDashboard_SMS_Count_txt=view.findViewById(R.id.dashboard_sms_count_txt);
-
-
+        mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.setMessage("Please Wait..");
+        mProgressDialog.show();
         //mSendMsgBtn = view.findViewById(R.id.dashboard_send_msg_btn);
         rq = Volley.newRequestQueue(getContext());
         getDashBordList();
@@ -176,6 +179,7 @@ public class DashBoardFragment extends Fragment {
                     mSMSCount = sms;
                     Log.d("SMSCount", mSMSCount);
                     mDashboard_SMS_Count_txt.setText(mSMSCount);
+                    mProgressDialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

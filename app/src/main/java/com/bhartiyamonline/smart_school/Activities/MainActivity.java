@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         toolbar = findViewById(R.id.toolbar);
-        mSecondToolbar = findViewById(R.id.toolbar_second);
-        mButtonGroup = findViewById(R.id.toolbar_btn_group_layout);
         drawer = findViewById(R.id.drawer_layout);
 
         if(!sharedPrefManager.isLoggedIn()){
@@ -110,8 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new SectionVewFragment()).commit();
                 break;
             case R.id.nav_sms_view:
-                toolbar.setVisibility(View.GONE);
-                mSecondToolbar.setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new SmsFragment()).commit();
 

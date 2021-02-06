@@ -3,6 +3,7 @@ package com.bhartiyamonline.smart_school.Fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ import com.bhartiyamonline.smart_school.Models.StudentData;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.api.Url;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -62,8 +64,9 @@ public class ViewStudentListFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private List<StudentData> studentDataList;
     private String classId;
+    private ConstraintLayout mConstraintLayout;
 
-        @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -71,12 +74,15 @@ public class ViewStudentListFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_view_student_list, container, false);
             rq = Volley.newRequestQueue(getContext());
             recyclerView = view.findViewById(R.id.student_view_list);
+            mConstraintLayout=view.findViewById(R.id.view_student_mainLayout);
             sharedPrefManager = SharedPrefManager.getInstance(getContext());
             school_id = sharedPrefManager.getUser().getSchool_id();
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             class_Dropdown = view.findViewById(R.id.view_student_class_dropdown);
             section_Dropdown = view.findViewById(R.id.view_student_section_dropdown);
             mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setMessage("Please wait..");
+            mProgressDialog.show();
 
 
 
@@ -97,7 +103,8 @@ public class ViewStudentListFragment extends Fragment {
                         }
                         else
                         {
-                            Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
+                            Snackbar.make(mConstraintLayout,"Please Select the class first", Snackbar.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(), "First select Class", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -129,7 +136,8 @@ public class ViewStudentListFragment extends Fragment {
                             {
                                 mProgressDialog.dismiss();
                                 recyclerView.setVisibility(View.GONE);
-                                Toast.makeText(getContext(), "Please Select Section", Toast.LENGTH_LONG).show();
+                                //Snackbar.make(mConstraintLayout,"Please Select the section", Snackbar.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Please Select Section", Toast.LENGTH_LONG).show();
                             }
 
 
@@ -176,6 +184,7 @@ public class ViewStudentListFragment extends Fragment {
                                     goodModelArrayList.add(new ClassData(id,school_id,class_name,active,created_at,updated_at));
 
                                     arrayList.add(goodModelArrayList.get(i).getClass_name());
+                                    mProgressDialog.dismiss();
 
                                 }
                                 Spinner_ItemAdapter2 getStateAdapter = new Spinner_ItemAdapter2(getContext(), (ArrayList<ClassData>)goodModelArrayList);
@@ -184,10 +193,14 @@ public class ViewStudentListFragment extends Fragment {
                             }
                             else
                             {
-                                Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
+                                mProgressDialog.dismiss();
+                                Snackbar.make(mConstraintLayout,"Data not found", Snackbar.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Data not found",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
+                            mProgressDialog.dismiss();
+                            Snackbar.make(mConstraintLayout,"Exception:"+e.getMessage(), Snackbar.LENGTH_LONG).show();
                             Log.d("Add Student","Exception:"+e.getMessage());
                         }
 
@@ -195,6 +208,8 @@ public class ViewStudentListFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mProgressDialog.dismiss();
+                Snackbar.make(mConstraintLayout,"Error:"+error.getMessage(), Snackbar.LENGTH_LONG).show();
                 Log.d("Add Student","Error:"+error.getMessage());
             }
         });
@@ -249,7 +264,8 @@ public class ViewStudentListFragment extends Fragment {
                                 section_Dropdown.setAdapter(getStateAdapter);
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Snackbar.make(mConstraintLayout,"Exception:"+e.getMessage(), Snackbar.LENGTH_LONG).show();
+                           // e.printStackTrace();
                             Log.d("Add Student","Exception:"+e.getMessage());
                         }
 
@@ -257,6 +273,7 @@ public class ViewStudentListFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Snackbar.make(mConstraintLayout,"Error:"+error.getMessage(), Snackbar.LENGTH_LONG).show();
                 Log.d("Add Student","Error:"+error.getMessage());
             }
         });
@@ -313,10 +330,12 @@ public class ViewStudentListFragment extends Fragment {
                     {
                         mProgressDialog.dismiss();
                         recyclerView.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "Data not found in Api level", Toast.LENGTH_LONG).show();
+                        Snackbar.make(mConstraintLayout,"Data not found", Snackbar.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "Data not found in Api level", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     mProgressDialog.dismiss();
+                    Snackbar.make(mConstraintLayout,"Exception:"+e.getMessage(), Snackbar.LENGTH_LONG).show();
                     Log.d("View Student:", "Exception : "+e.getMessage());
                 }
 
@@ -325,6 +344,7 @@ public class ViewStudentListFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mProgressDialog.dismiss();
+                Snackbar.make(mConstraintLayout,"Error:"+error.getMessage(), Snackbar.LENGTH_LONG).show();
                 Log.d("View Student:", "Error : "+error);
             }
         });

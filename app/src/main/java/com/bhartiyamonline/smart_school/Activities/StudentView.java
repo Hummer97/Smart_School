@@ -1,10 +1,12 @@
 package com.bhartiyamonline.smart_school.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.SharedPrefManager.SharedPrefManager;
 import com.bhartiyamonline.smart_school.api.Url;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonArray;
 import com.squareup.picasso.Picasso;
 
@@ -36,12 +39,15 @@ public class StudentView extends AppCompatActivity {
     ProgressDialog mProgressDialog;
     private TextView mStudentName,mRegistrationNo,
             mRollNo,mPhoneNo,mAltrPhoneNo,mParentName,mDob,mSectionName,mAttendence,mClass;
+    private ConstraintLayout mConstraintLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_view);
         sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
         mSchool_Id = sharedPrefManager.getUser().getSchool_id();
+        mConstraintLayout = findViewById(R.id.student_mainLayout);
         bundle = getIntent().getExtras();
         mStudent_Id = bundle.getString("student_id");
         mProgressDialog = new ProgressDialog(StudentView.this);
@@ -65,7 +71,8 @@ public class StudentView extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(StudentView.this, "Data Not Found", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mConstraintLayout,"Data Not Found", Snackbar.LENGTH_LONG).show();
+            //Toast.makeText(StudentView.this, "Data Not Found", Toast.LENGTH_SHORT).show();
             mProgressDialog.dismiss();
         }
 
@@ -103,19 +110,22 @@ public class StudentView extends AppCompatActivity {
                     else
                     {
                         mProgressDialog.dismiss();
-                        Toast.makeText(StudentView.this, status, Toast.LENGTH_SHORT).show();
+//                        Snackbar.make(mConstraintLayout,"Data Not Found", Snackbar.LENGTH_LONG).show();
+//                        Toast.makeText(StudentView.this, status, Toast.LENGTH_SHORT).show();
 
                     }
                 } catch (JSONException e) {
                     mProgressDialog.dismiss();
-                    Toast.makeText(StudentView.this, "Exception : "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mConstraintLayout,"Exception: "+e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(StudentView.this, "Exception : "+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mProgressDialog.dismiss();
-                Toast.makeText(StudentView.this, "Error : "+error.getMessage(),Toast.LENGTH_SHORT).show();
+                Snackbar.make(mConstraintLayout,"Error: "+error.getMessage(), Snackbar.LENGTH_LONG).show();
+                //Toast.makeText(StudentView.this, "Error : "+error.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
         });

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bhartiyamonline.smart_school.Fragments.SmsFragment;
 import com.bhartiyamonline.smart_school.Models.TotalStudentData;
 import com.bhartiyamonline.smart_school.R;
 import com.bhartiyamonline.smart_school.api.Url;
@@ -23,7 +24,10 @@ import com.bhartiyamonline.smart_school.constant.SMSConstant;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,6 +36,7 @@ public class Sms_TotalStudentAdapter extends RecyclerView.Adapter<Sms_TotalStude
     private Context context;
     private List<TotalStudentData> studentDataList;
     private List<TotalStudentData> mobileList =new ArrayList<>();
+    private HashMap<String,String> mHashMapList = new HashMap<>();
 
     public Sms_TotalStudentAdapter(Context context,List<TotalStudentData> studentDataList) {
         this.context = context;
@@ -61,42 +66,47 @@ public class Sms_TotalStudentAdapter extends RecyclerView.Adapter<Sms_TotalStude
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                 {
-                    SMSConstant.MOBILE_NO_LIST.add(mobile);
-                    Log.d("SMSFragment", "SMS Adapter: "+SMSConstant.MOBILE_NO_LIST.toString());
+                    SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.put(String.valueOf(position), mobile);
+                    Log.d("SMSFragment", "SMS Adapter under onChecked: "+ SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.toString());
                 }
                 else
                 {
-                    Log.d("SMSFragment", "SMS Adapter: "+position);
-                    if (SMSConstant.MOBILE_NO_LIST.size()>= position)
+                    if (SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.size()>= 0)
                     {
-                        SMSConstant.MOBILE_NO_LIST.remove(position);
-
-                        Log.d("SMSFragment", "SMS Adapter: "+SMSConstant.MOBILE_NO_LIST.toString());
+                        Log.d("SMSFragment", "SMS Adapter: "+position);
+                        SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.remove(String.valueOf(position));
+                        Log.d("SMSFragment", "SMS remove under onChecked: "+SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.toString());
                     }
                 }
             }
         });
-        mobileList.clear();
+//        Collection<String> value = mHashMapList.values();
 
-//        if (flag)
-//        {
-//            holder.mCheckBox.setChecked(true);
-//            SMSConstant.MOBILE_NO_LIST.add(mobile);
-//
-//        }
-//        else
-//        {
-//            holder.mCheckBox.setChecked(false);
-//            SMSConstant.MOBILE_NO_LIST.clear();
-//        }
-//        if (holder.mCheckBox.isChecked())
-//        {
-//            //SMSConstant.MOBILE_NO_LIST.add(mobile);
-//        }
-//        else
-//        {
-//            SMSConstant.MOBILE_NO_LIST.clear();
-//        }
+        // Creating an ArrayList of keys
+        // by passing the keySet
+        //mobileList.clear();
+        if (flag)
+        {
+            holder.mCheckBox.setChecked(true);
+        }
+        else
+        {
+            holder.mCheckBox.setChecked(false);
+        }
+        if(holder.mCheckBox.isChecked())
+        {
+            SMSConstant.MOBILE_NO_LIST.add(mobile);
+            SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.put(String.valueOf(position), mobile);
+            Log.d("SMSFragment", "mCheckBox.isChecked: "+SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.toString());
+            Log.d("SMSFragment", "-------------------------------------------------------------");
+        }
+        else
+        {
+            SMSConstant.MOBILE_NO_LIST.clear();
+            SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.clear();
+            Log.d("SMSFragment", "!--mCheckBox.isChecked: "+SMSConstant.MOBILE_NO_ROW_HAS_MAP_LIST.toString());
+            Log.d("SMSFragment", "-------------------------------------------------------------");
+        }
         getMobileNumStringList();
         //Log.d("SMSList", SMSConstant.MOBILE_NO_LIST.toString());
 
